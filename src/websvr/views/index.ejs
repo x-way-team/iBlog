@@ -12,7 +12,7 @@
 -->
 
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,11 +30,22 @@
     <![endif]-->
   </head>
   <body>
-    <h1>你好，世界！</h1>
-
+  	<% include header.ejs%>
+    <div class="container-fluid">
+    	<div ng-view></div>
+    </div>
+    <% include footer.ejs%>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Angular component-->
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-route/angular-route.min.js"></script>
+    <script src="ng/app.js"></script>
+    <script src="ng/controllers.js"></script>
+    <script src="ng/filters.js"></script>
+    <script src="ng/services.js"></script>
+    <script src="ng/directives.js"></script>
   </body>
 </html>
