@@ -13,3 +13,7 @@ controllers.controller('MyCtrl1', function () {
 
 controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $location) {
 }]);
+
+controllers.controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
+	$scope.data = ['haokai','zhengyi','nanssy'];
+}]);
