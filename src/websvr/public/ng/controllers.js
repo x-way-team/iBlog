@@ -17,3 +17,19 @@ controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $loc
 controllers.controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
 	$scope.data = ['haokai','zhengyi','nanssy'];
 }]);
+
+
+controllers.controller('LoginCtrl', ['$scope', '$location', 'UserManageService', function ($scope, $location, UserManageService) {
+	$scope.loginData = {
+		userName: '',
+		password: '',
+		rememberMe: false
+	};
+	$scope.login = function () {
+		UserManageService.signin($scope.loginData.userName, $scope.loginData.password, null, function(data){			
+			$location.path('/home');
+		}, function(msg){
+			alert(msg);
+		}); 
+	};
+}]);
