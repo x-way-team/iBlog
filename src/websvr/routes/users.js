@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var user = require('../services/user');
 
 /* GET users listing. */
 router.get('/', function(req, res) {

@@ -112,14 +112,14 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
     		password: password,
     		checkCode: checkCode
     	};
-        ApiService.get('/api/signin', param, successcb, failcb);
+        ApiService.get('/api/users/signin', param, successcb, failcb);
     };
 
     cfgData.signOut = function(token, successcb, failcb) {
     	var param = {
     		token: token
     	};
-        ApiService.post('/api/signout', param, null, successcb, failcb);
+        ApiService.post('/api/users/signout', param, null, successcb, failcb);
     };
 
     cfgData.signUp = function (userName, password, email, successcb, failcb) {
@@ -128,14 +128,14 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
     		password: password,
     		email: email
     	};
-    	ApiService.post('/api/signup', null, dataObj, successcb, failcb);
+    	ApiService.post('/api/users/signup', null, dataObj, successcb, failcb);
     };
 
     cfgData.updateUserDetail = function (token, detailObj, successcb, failcb) {
     	var paramObj = {
     		token: token
     	};
-    	ApiService.post('/api/signup', paramObj, detailObj, successcb, failcb);
+    	ApiService.post('/api/users/signup', paramObj, detailObj, successcb, failcb);
     };
 
     return cfgData;
