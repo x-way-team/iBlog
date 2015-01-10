@@ -7,6 +7,10 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:spec', function(req, res) {
+	res.render('index', { title: 'iBlog' });
+});
+
+router.get('/partial/:spec', function(req, res) {
 	res.render(req.params.spec, { title: 'iBlog' });
 });
 module.exports = router;

@@ -1,0 +1,25 @@
+
+<div class="row">
+  <div class="col-xs-6">
+    <img src="/images/login.png" class="img-responsive" alt="Responsive image" data-holder-rendered="true">
+    <div class="carousel-caption"></div>
+  </div>
+  <div class="col-xs-6">
+    <form role="form">
+      <div class="form-group">
+        <label for="LoginUserName">Name</label>
+        <input id="LoginUserName" type="text" class="form-control" placeholder="Enter Name/Email/Phone number" ng-model="loginData.userName"/>
+      </div>
+      <div class="form-group">
+        <label for="InputLoginPassword">Password</label>
+        <input id="InputLoginPassword" type="password" class="form-control" placeholder="Password" ng-model="loginData.password">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="loginData.rememberMe">Remember me</input>
+        </label>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="login()">Login</button>
+    </form>
+  </div>
+</div>
