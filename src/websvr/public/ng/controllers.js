@@ -26,8 +26,9 @@ controllers.controller('LoginCtrl', ['$scope', '$location', 'UserManageService',
 		rememberMe: false
 	};
 	$scope.login = function () {
-		UserManageService.signin($scope.loginData.userName, $scope.loginData.password, null, function(data){			
-			$location.path('/home');
+		UserManageService.signIn($scope.loginData.userName, $scope.loginData.password, null, function(data){
+			//todo			
+			$location.path('/');
 		}, function(msg){
 			alert(msg);
 		}); 

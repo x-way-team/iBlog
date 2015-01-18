@@ -49,9 +49,13 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 		}
 		$http.get(url, methodObj)
         .success(function (data) {
-            successcb(data);
+            if (data.resultCode === 'S') {
+                successcb(data);
+            } else {
+                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            }
         }).error(function (data,status, headers, config) {
-            failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            failcb('Request error!');
         });
 	};
 
@@ -65,9 +69,13 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 		}
 		$http.post(url, methodObj)
         .success(function (data) {
-            successcb(data);
+            if (data.resultCode === 'S') {
+                successcb(data);
+            } else {
+                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            }
         }).error(function (data,status, headers, config) {
-            failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            failcb('Request error!');
         });
 	};
 
@@ -81,9 +89,13 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 		}
 		$http.put(url, methodObj)
         .success(function (data) {
-            successcb(data);
+            if (data.resultCode === 'S') {
+                successcb(data);
+            } else {
+                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            }
         }).error(function (data,status, headers, config) {
-            failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            failcb('Request error!');
         });
 	};
 
@@ -94,9 +106,13 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 		}
 		$http.delete(url, methodObj)
         .success(function (data) {
-            successcb(data);
+            if (data.resultCode === 'S') {
+                successcb(data);
+            } else {
+                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            }
         }).error(function (data,status, headers, config) {
-            failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            failcb('Request error!');
         });
 	};
 
@@ -112,7 +128,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
     		password: password,
     		checkCode: checkCode
     	};
-        ApiService.get('/api/users/signin', param, successcb, failcb);
+        ApiService.get('/api/users/token', param, successcb, failcb);
     };
 
     cfgData.signOut = function(token, successcb, failcb) {
