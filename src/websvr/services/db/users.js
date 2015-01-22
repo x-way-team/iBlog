@@ -20,7 +20,7 @@ userObj.init = function(ap) {
 	});
 };
 
-userObj.getToken = function(userName, password, cb) {
+userObj.verify = function(userName, password, cb) {
 	var User = mongoose.model('users', UserSchema);
 	User.find({ 
 		userName: userName,
@@ -30,10 +30,10 @@ userObj.getToken = function(userName, password, cb) {
 			console.log(err);
 		}
 		if (docs.length === 0) {
-			var result= {resultCode:'F', errorCode:'1109', message:'get token failed'};
+			var result= {resultCode:'F'};
 			cb(result);
 		} else {
-			var result = {resultCode:'S', content:{token: req.sessionID}};
+			var result = {resultCode:'S'};
         	cb(result);
 		}
     });
