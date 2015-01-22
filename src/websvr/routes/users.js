@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../services/user');
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://root:root@localhost/iblogdb', function (error) {
-    if (error) {
-        console.log(error);
-    }
-});
+var users = require('../controllers/users');
 
 // Mongoose Schema definition
 var Schema = mongoose.Schema, 
@@ -34,21 +28,9 @@ router.get('/token', function(req, res) {
 	var userName = req.params.userName;
 	var password = req.params.password;
 	var checkCode = req.params.checkCode;//ignore
-	User.find({ 
-		userName: userName,
-		password: password
-	}, function (err, docs) {
-		if (err) {
-			console.log(err);
-		}
-		if (docs.length === 0) {
-			var result= {resultCode:'F', errorCode:'1109', message:'get token failed'};
-			res.json(result);
-		} else {
-			var result = {resultCode:'S', content:{token: req.sessionID}};
-        	res.json(result);
-		}
-    });
+	users.signIn(userName, password, checkCode, function(result){
+		res.json(result);
+	});
 });
 
 module.exports = router;

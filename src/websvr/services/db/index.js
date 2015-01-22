@@ -3,7 +3,7 @@ var users = require("./users.js");
 var contents = require("./contents.js");
 var orgs = require("./orgs.js");
 
-var db = require('mongoose');
+var mongoose = require('mongoose');
 
 exports = module.exports = createApplication;
 
@@ -11,6 +11,7 @@ function createApplication() {
 	this.Users = users;
 	this.Contents = contents;
 	this.Orgs = orgs;
+	this.DB = mongoose;
 
 	var config_data = {};
 	this.config = function(dbUrl) {
@@ -26,13 +27,13 @@ function createApplication() {
 	};
 
 	this.state = "uninit";
-	//mongodb://root:root@localhost/iblogdb
+	
 	this.start = function() {
 		if (!config_data.url) {
 			error_cb(new Error("db needs url"));
 			return;
 		}
-		db.connect(config_data.url, function (error) {
+		mongoose.connect(config_data.url, function (error) {
 		    if (error) {
 		        console.log(error);
 		        if (error_cb) {
