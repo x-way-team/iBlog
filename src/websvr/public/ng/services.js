@@ -99,7 +99,7 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
         });
 	};
 
-	cfgData.delete = function(url, paramObj, successcb, failcb) {
+	cfgData.delete = function(url, paramObj, dataObj, successcb, failcb) {
 		var methodObj = {timeout:(1000*30)};
 		if (paramObj) {
 			methodObj.params = paramObj;
