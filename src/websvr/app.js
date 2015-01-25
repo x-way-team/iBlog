@@ -8,7 +8,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var apiUsers = require('./routes/users');
+var apiSessions = require('./routes/sessions');
+
+var db = require("./services/db")()
+.error(function(err){
+    console.log(err);
+}).config("mongodb://root:root@localhost/iblogdb")
+.start();
 
 var app = express();
 
@@ -29,7 +36,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api/users', users);
+app.use('/api/user', apiUsers);
+app.use('/api/session', apiSessions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

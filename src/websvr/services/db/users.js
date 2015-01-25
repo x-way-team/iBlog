@@ -1,13 +1,14 @@
 'use strict';
+var guid = require('guid');
+
 var userObj = exports = module.exports = {};
 
 userObj.init = function(ap) {
 	this.app = ap;
 	this.db = ap.DB;
 	var Schema = db.Schema;
-	var ObjectId = Schema.ObjectId;
 	this.UserSchema = new Schema({
-		uid: ObjectId,
+		uid: String,
 	    userName: String,
 	    password: String,
 	    email: String,
@@ -18,23 +19,30 @@ userObj.init = function(ap) {
 	    	allowPub: Boolean,
 	    }
 	});
+	this.WebSessionSchema = new Schema({
+		sid: String,
+		uid: String,
+		token: String
+	});
+	this.UserModel = mongoose.model('users', this.UserSchema);
+	this.WebSessionModel = mongoose.model('websession', this.WebSessionSchema);
 };
 
-userObj.verify = function(userName, password, cb) {
-	var User = mongoose.model('users', UserSchema);
-	User.find({ 
+userObj.createSession = function(userName, password, token, cb) {
+	this.UserModel.findOne({ 
 		userName: userName,
 		password: password
-	}, function (err, docs) {
+	}, function (err, doc) {
 		if (err) {
-			console.log(err);
-		}
-		if (docs.length === 0) {
-			var result= {resultCode:'F'};
-			cb(result);
+			cb(err, doc);
 		} else {
-			var result = {resultCode:'S'};
-        	cb(result);
+			var newDoc = {
+				sid: guid.raw(),
+				uid: doc.uid,
+				token: token
+			};
+			var newData = new this.WebSessionModel(newDoc);
+        	cb(null, newDoc);
 		}
     });
 };

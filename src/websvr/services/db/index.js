@@ -1,51 +1,57 @@
 'use strict';
+/* api:
+* 
+*
+*/
+
 var users = require("./users.js");
 var contents = require("./contents.js");
 var orgs = require("./orgs.js");
 
 var mongoose = require('mongoose');
 
-exports = module.exports = createApplication;
-
-function createApplication() {
+var app = exports = module.exports = function() {
 	this.Users = users;
 	this.Contents = contents;
 	this.Orgs = orgs;
 	this.DB = mongoose;
 
-	var config_data = {};
-	this.config = function(dbUrl) {
-		config_data.url = dbUrl;
-		this.state = "config";
-		return this;
-	};
-	//error callback
-	var error_cb = null;
-	this.error = function(fn) {
-		this.errorcb = fn;
-		return this;
-	};
-
+	this.config_data = {url:null};
+	this.error_cb = null;
 	this.state = "uninit";
-	
-	this.start = function() {
-		if (!config_data.url) {
-			error_cb(new Error("db needs url"));
-			return;
-		}
-		mongoose.connect(config_data.url, function (error) {
-		    if (error) {
-		        console.log(error);
-		        if (error_cb) {
-		        	error_cb(error);
-		        }	        
-		    } else {
-		    	this.Users.init(this);
-		    	this.Contents.init(this);
-		    	this.Orgs.init(this);
-		    	this.state = "init";
-		    }
-		});
-	};
+};
+
+app.config_data = {url:null};
+
+app.config = function(dbUrl) {
+	this.config_data.url = dbUrl;
+	this.state = "config";
 	return this;
-}
+};
+
+app.error = function(fn) {
+	this.error_cb = fn;
+	return this;
+};
+
+app.start = function() {
+	if (!this.config_data.url) {
+		if (this.error_cb) {
+			this.error_cb(new Error("db needs url"));
+		}		
+		return;
+	}
+	mongoose.connect(this.config_data.url, function (error) {
+	    if (error) {
+	        console.log(error);
+	        if (this.error_cb) {
+	        	this.error_cb(error);
+	        }	        
+	    } else {
+	    	this.Users.init(this);
+	    	this.Contents.init(this);
+	    	this.Orgs.init(this);
+	    	this.state = "init";
+	    }
+	});
+};

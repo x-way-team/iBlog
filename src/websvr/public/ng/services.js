@@ -42,12 +42,9 @@ services.factory('ErrCodeLangService', function () {
 
 services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, ErrCodeLangService) {
 	var cfgData = {};
-	cfgData.get = function(url, paramObj, successcb, failcb) {
-		var methodObj = {timeout:(1000*30)};
-		if (paramObj) {
-			methodObj.params = paramObj;
-		}
-		$http.get(url, methodObj)
+	cfgData.get = function(url, obj, successcb, failcb) {
+        obj.timeout = (1000*30);
+		$http.get(url, obj)
         .success(function (data) {
             if (data.resultCode === 'S') {
                 successcb(data);
@@ -59,15 +56,9 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
         });
 	};
 
-	cfgData.post = function(url, paramObj, dataObj, successcb, failcb) {
-		var methodObj = {timeout:(1000*30)};
-		if (paramObj) {
-			methodObj.params = paramObj;
-		}
-		if (dataObj) {
-			methodObj.data = dataObj;
-		}
-		$http.post(url, methodObj)
+	cfgData.post = function(url, obj, successcb, failcb) {
+		obj.timeout = (1000*30);
+		$http.post(url, obj)
         .success(function (data) {
             if (data.resultCode === 'S') {
                 successcb(data);
@@ -79,15 +70,9 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
         });
 	};
 
-	cfgData.put = function(url, paramObj, dataObj, successcb, failcb) {
-		var methodObj = {timeout:(1000*30)};
-		if (paramObj) {
-			methodObj.params = paramObj;
-		}
-		if (dataObj) {
-			methodObj.data = dataObj;
-		}
-		$http.put(url, methodObj)
+	cfgData.put = function(url, obj, successcb, failcb) {
+		obj.timeout = (1000*30);
+		$http.put(url, obj)
         .success(function (data) {
             if (data.resultCode === 'S') {
                 successcb(data);
@@ -99,12 +84,9 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
         });
 	};
 
-	cfgData.delete = function(url, paramObj, dataObj, successcb, failcb) {
-		var methodObj = {timeout:(1000*30)};
-		if (paramObj) {
-			methodObj.params = paramObj;
-		}
-		$http.delete(url, methodObj)
+	cfgData.delete = function(url, obj, successcb, failcb) {
+		obj.timeout = (1000*30);
+		$http.delete(url, obj)
         .success(function (data) {
             if (data.resultCode === 'S') {
                 successcb(data);
@@ -123,35 +105,44 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
     var cfgData = {};
 
     cfgData.signIn = function (userName, password, checkCode, successcb, failcb) {
-    	var param = {
-    		userName: userName,
-    		password: password,
-    		checkCode: checkCode
+    	var obj = {
+                param:{
+                userName: userName,
+                password: password,
+                checkCode: checkCode
+            }
     	};
-        ApiService.get('/api/users/token', param, successcb, failcb);
+        ApiService.post('/api/session', obj, successcb, failcb);
     };
 
     cfgData.signOut = function(token, successcb, failcb) {
-    	var param = {
-    		token: token
+    	var obj = {
+            param : {
+        		token: token
+            }
     	};
-        ApiService.post('/api/users/signout', param, null, successcb, failcb);
+        ApiService.delete('/api/session', obj, successcb, failcb);
     };
 
     cfgData.signUp = function (userName, password, email, successcb, failcb) {
-    	var dataObj = {
-    		userName: userName,
-    		password: password,
-    		email: email
+    	var obj = {
+            dataObj : {
+        		userName: userName,
+        		password: password,
+        		email: email
+            }
     	};
-    	ApiService.post('/api/users/signup', null, dataObj, successcb, failcb);
+    	ApiService.post('/api/user', obj, successcb, failcb);
     };
 
     cfgData.updateUserDetail = function (token, detailObj, successcb, failcb) {
-    	var paramObj = {
-    		token: token
+    	var obj = {
+            paramObj: {
+    		  token: token
+            },
+            data: detailObj
     	};
-    	ApiService.post('/api/users/signup', paramObj, detailObj, successcb, failcb);
+    	ApiService.put('/api/user', obj, detailObj, successcb, failcb);
     };
 
     return cfgData;
