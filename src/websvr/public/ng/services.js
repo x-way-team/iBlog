@@ -106,7 +106,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
 
     cfgData.signIn = function (userName, password, checkCode, successcb, failcb) {
     	var obj = {
-                param:{
+            data:{
                 userName: userName,
                 password: password,
                 checkCode: checkCode
@@ -117,7 +117,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
 
     cfgData.signOut = function(token, successcb, failcb) {
     	var obj = {
-            param : {
+            params : {
         		token: token
             }
     	};
@@ -126,7 +126,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
 
     cfgData.signUp = function (userName, password, email, successcb, failcb) {
     	var obj = {
-            dataObj : {
+            data : {
         		userName: userName,
         		password: password,
         		email: email
@@ -137,7 +137,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
 
     cfgData.updateUserDetail = function (token, detailObj, successcb, failcb) {
     	var obj = {
-            paramObj: {
+            params: {
     		  token: token
             },
             data: detailObj

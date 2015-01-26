@@ -11,10 +11,10 @@ var routes = require('./routes/index');
 var apiUsers = require('./routes/users');
 var apiSessions = require('./routes/sessions');
 
-var db = require("./services/db")()
+var db = require("./services/db")
 .error(function(err){
     console.log(err);
-}).config("mongodb://root:root@localhost/iblogdb")
+}).config("mongodb://root:borlandc@localhost/iblogdb")
 .start();
 
 var app = express();

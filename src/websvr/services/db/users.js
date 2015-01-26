@@ -1,13 +1,14 @@
 'use strict';
 var guid = require('guid');
+var mongoose = require('mongoose');
 
 var userObj = exports = module.exports = {};
 
 userObj.init = function(ap) {
-	this.app = ap;
-	this.db = ap.DB;
-	var Schema = db.Schema;
-	this.UserSchema = new Schema({
+	userObj.app = ap;
+	userObj.db = ap.DB;
+	var Schema = userObj.db.Schema;
+	userObj.UserSchema = new Schema({
 		uid: String,
 	    userName: String,
 	    password: String,
@@ -19,17 +20,17 @@ userObj.init = function(ap) {
 	    	allowPub: Boolean,
 	    }
 	});
-	this.WebSessionSchema = new Schema({
+	userObj.WebSessionSchema = new Schema({
 		sid: String,
 		uid: String,
 		token: String
 	});
-	this.UserModel = mongoose.model('users', this.UserSchema);
-	this.WebSessionModel = mongoose.model('websession', this.WebSessionSchema);
+	userObj.UserModel = mongoose.model('users', userObj.UserSchema);
+	userObj.WebSessionModel = mongoose.model('websession', userObj.WebSessionSchema);
 };
 
 userObj.createSession = function(userName, password, token, cb) {
-	this.UserModel.findOne({ 
+	userObj.UserModel.findOne({ 
 		userName: userName,
 		password: password
 	}, function (err, doc) {
@@ -41,7 +42,7 @@ userObj.createSession = function(userName, password, token, cb) {
 				uid: doc.uid,
 				token: token
 			};
-			var newData = new this.WebSessionModel(newDoc);
+			var newData = new userObj.WebSessionModel(newDoc);
         	cb(null, newDoc);
 		}
     });

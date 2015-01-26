@@ -4,9 +4,9 @@ var users = require('../controllers/users.js');
 
 /* create user session, user sign in */
 router.post('/', function(req, res){
-	var userName = req.data.userName;
-	var password = req.data.password;
-	var checkCode = req.data.checkCode;
+	var userName = req.body.data.userName;
+	var password = req.body.data.password;
+	var checkCode = req.body.data.checkCode;
 	//todo: verify checkcode
 	//...
 	user.createSession(userName, password, webSessionID, function(result) {
