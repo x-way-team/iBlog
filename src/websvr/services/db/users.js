@@ -34,8 +34,10 @@ userObj.createSession = function(userName, password, token, cb) {
 		userName: userName,
 		password: password
 	}, function (err, doc) {
-		if (err) {
+		if (err ) {
 			cb(err, doc);
+		} else if(!doc){
+			cb(new Error("check user failed"), doc);
 		} else {
 			var newDoc = {
 				sid: guid.raw(),

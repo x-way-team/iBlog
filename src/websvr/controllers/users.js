@@ -1,9 +1,9 @@
 'use strict';
-var user = require("../services/db").Users;
+var users = require("../services/db").Users;
 
 exports.createSession = function(userName, password, webSessionID, cb) {
 	var token = webSessionID;
-	user.createSession(userName, password, token, function(err, doc){
+	users.createSession(userName, password, token, function(err, doc){
 		var result = {};
 		if (!err) {
 			result.resultCode = 'S';

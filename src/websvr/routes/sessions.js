@@ -9,7 +9,7 @@ router.post('/', function(req, res){
 	var checkCode = req.body.data.checkCode;
 	//todo: verify checkcode
 	//...
-	user.createSession(userName, password, webSessionID, function(result) {
+	users.createSession(userName, password, req.sessionID, function(result) {
 		if (result.resultCode === 'S') {
 			result.content = result.content || {};
 			result.content.token = req.sessionID;
@@ -26,4 +26,7 @@ router.delete('/', function(req, res){
 
 });
 
+router.get('/', function(req, res){
+	res.json({resultCode:'F'});
+});
 module.exports = router;
