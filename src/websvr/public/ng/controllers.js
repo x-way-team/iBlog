@@ -19,16 +19,16 @@ controllers.controller('HomeCtrl', ['$scope', '$location', function ($scope, $lo
 }]);
 
 
-controllers.controller('LoginCtrl', ['$scope', '$location', 'UserManageService', function ($scope, $location, UserManageService) {
+controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserManageService', function ($rootScope, $scope, $location, UserManageService) {
 	$scope.loginData = {
 		userName: '',
 		password: '',
 		rememberMe: false
 	};
 	$scope.login = function () {
-		UserManageService.signIn($scope.loginData.userName, $scope.loginData.password, null, function(data){
+		UserManageService.signIn($rootScope.token, $scope.loginData.userName, $scope.loginData.password, null, function(data){
 			//todo			
-			$location.path('/');
+			$location.path('/');//跳转到home页面
 		}, function(msg){
 			alert(msg);
 		}); 

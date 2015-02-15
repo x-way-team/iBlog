@@ -50,6 +50,7 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
                 successcb(data);
             } else {
                 failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+                console.log(data.errorCode, data.message);
             }
         }).error(function (data,status, headers, config) {
             failcb('Request error!');
@@ -103,16 +104,22 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 
 services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', function (ApiService, ErrCodeLangService) {
     var cfgData = {};
+    cfgData.createSession = function(successcb, failcb) {
+        ApiService.post('/api/session', {}, successcb, failcb);
+    };
 
-    cfgData.signIn = function (userName, password, checkCode, successcb, failcb) {
+    cfgData.signIn = function (token, userName, password, checkCode, successcb, failcb) {
     	var obj = {
+            params: {
+              token: token
+            },
             data:{
                 userName: userName,
                 password: password,
                 checkCode: checkCode
             }
     	};
-        ApiService.post('/api/session', obj, successcb, failcb);
+        ApiService.put('/api/session/user', obj, successcb, failcb);
     };
 
     cfgData.signOut = function(token, successcb, failcb) {

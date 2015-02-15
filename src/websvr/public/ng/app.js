@@ -20,5 +20,10 @@ myApp.config([
 	}
 ]);
   
-myApp.run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) { 
+myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function ($rootScope, $location, $window, UserManageService) {
+	UserManageService.createSession(function(data){
+		$rootScope.token = data.content.token;
+	}, function(msg){
+		alert(msg);
+	})
 }]);

@@ -1,5 +1,5 @@
 'use strict';
-var guid = require('guid');
+
 var mongoose = require('mongoose');
 
 var userObj = exports = module.exports = {};
@@ -18,34 +18,56 @@ userObj.init = function(ap) {
 	    settings: {
 	    	active: Boolean,
 	    	allowPub: Boolean,
+	    	level: Number,
+	    	score: Number
 	    }
 	});
 	userObj.WebSessionSchema = new Schema({
-		sid: String,
+		token: String,
 		uid: String,
-		token: String
+		userName: String
 	});
 	userObj.UserModel = mongoose.model('users', userObj.UserSchema);
 	userObj.WebSessionModel = mongoose.model('websession', userObj.WebSessionSchema);
 };
 
-userObj.createSession = function(userName, password, token, cb) {
+userObj.createSession = function(token, cb) {
+	userObj.WebSessionModel.findOne({ 
+		token: token
+	}, function (err, doc) {
+		if (err || !doc) {
+			var newDoc = {
+				token: token
+			};
+			var newData = new userObj.WebSessionModel(newDoc);
+        	cb(null, newDoc);
+		} else {
+			cb(new Error("internal error, conflict token " + token), null);			
+		}
+    });
+};
+
+userObj.auth = function(token, userName, password, cb) {
 	userObj.UserModel.findOne({ 
 		userName: userName,
 		password: password
 	}, function (err, doc) {
-		if (err ) {
+		if (err) {
 			cb(err, doc);
 		} else if(!doc){
 			cb(new Error("check user failed"), doc);
 		} else {
 			var newDoc = {
-				sid: guid.raw(),
+				token: token,
 				uid: doc.uid,
-				token: token
+				userName: doc.userName
 			};
 			var newData = new userObj.WebSessionModel(newDoc);
         	cb(null, newDoc);
 		}
     });
+};
+
+userObj.createUser = function() {
+	
 };
