@@ -94,10 +94,24 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
             } else {
                 failcb(ErrCodeLangService.getErrMsg(data.errorCode));
             }
-        }).error(function (data,status, headers, config) {
+        }).error(function (data, status, headers, config) {
             failcb('Request error!');
         });
 	};
+
+    cfgData.head = function(url, obj, successcb, failcb) {
+        obj.timeout = (1000*30);
+        $http.head(url, obj)
+        .success(function (data) {
+            if (data.resultCode === 'S') {
+                successcb(data);
+            } else {
+                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
+            }
+        }).error(function (data,status, headers, config) {
+            failcb('Request error!');
+        });
+    };
 
 	return cfgData;
 }]);
@@ -131,12 +145,21 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
         ApiService.delete('/api/session', obj, successcb, failcb);
     };
 
-    cfgData.signUp = function (userName, password, email, successcb, failcb) {
+    cfgData.checkUserName = function (userName, successcb, failcb) {
+        var obj = {
+            params: {
+                userName: userName
+            }
+        };
+        ApiService.head('/api/user', obj, successcb, failcb);
+    };
+
+    cfgData.signUp = function (userName, password, checkCode, successcb, failcb) {
     	var obj = {
             data : {
         		userName: userName,
         		password: password,
-        		email: email
+                checkCode: checkCode
             }
     	};
     	ApiService.post('/api/user', obj, successcb, failcb);

@@ -14,8 +14,8 @@ myApp.config([
 	    $routeProvider.when('/', { templateUrl: ('partial/home'), controller: 'HomeCtrl' });
 	    $routeProvider.when('/404', { templateUrl: ('partial/404'), controller: 'MyCtrl2' });
 	    $routeProvider.when('/login', { templateUrl: ('partial/login'), controller: 'LoginCtrl' });
+	    $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl' });
 	    $routeProvider.otherwise({ redirectTo: '/404' });
-
 	    $locationProvider.html5Mode(true);
 	}
 ]);

@@ -12,15 +12,7 @@ userObj.init = function(ap) {
 		uid: String,
 	    userName: String,
 	    password: String,
-	    email: String,
-	    createDate: Date,
-	    nickName: String,
-	    settings: {
-	    	active: Boolean,
-	    	allowPub: Boolean,
-	    	level: Number,
-	    	score: Number
-	    }
+	    createDate: Date
 	});
 	userObj.WebSessionSchema = new Schema({
 		token: String,

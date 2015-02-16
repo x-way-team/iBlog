@@ -19,13 +19,6 @@ router.put('/user', function(req, res){
 	//todo: verify checkcode
 	//...
 	users.auth(token, userName, password, function(result) {
-		if (result.resultCode === 'S') {
-			result.content = result.content || {};
-			result.content.token = req.sessionID;
-		} else {//(result.resultCode === 'F')
-			result.errorCode = 1109;
-			result.message = 'failed to auth';
-		}
 		res.json(result);
 	});	
 });

@@ -31,4 +31,20 @@ exports.auth = function(token, userName, password, cb) {
 		}
 		cb(result);
 	});
-}
+};
+
+
+exports.signUp = function(userName, password, cb) {
+	users.auth(token, userName, password, function(err, doc){
+		var result = {};
+		if (!err) {
+			result.resultCode = 'S';
+			result.content = {uid: doc.uid, userName: doc.userName};
+		} else {
+			result.resultCode = 'F';
+			result.errorCode = '1109';
+			result.message = err.message;
+		}
+		cb(result);
+	});
+};
