@@ -19,8 +19,8 @@ userObj.init = function(ap) {
 		uid: String,
 		userName: String
 	});
-	userObj.UserModel = mongoose.model('users', userObj.UserSchema);
-	userObj.WebSessionModel = mongoose.model('websession', userObj.WebSessionSchema);
+	userObj.UserModel = mongoose.model('iblog.users', userObj.UserSchema);
+	userObj.WebSessionModel = mongoose.model('iblog.websession', userObj.WebSessionSchema);
 };
 
 userObj.createSession = function(token, cb) {
@@ -60,6 +60,25 @@ userObj.auth = function(token, userName, password, cb) {
     });
 };
 
-userObj.createUser = function() {
-	
+userObj.createUser = function(userName, password, cb) {
+	userObj.UserModel.findOne({ 
+		userName: userName
+	}, function (err, doc) {
+		if (err || !doc) {
+			var newDoc = {
+				userName: userName,
+				password: password
+			};
+			var newData = new userObj.UserModel(newDoc).save(function(err, user){
+				if (!err) {
+					newDoc.uid = user._id;
+					cb(null, newDoc);
+				} else {
+					console.log(err, user);
+				}
+			});        	
+		} else {
+			cb(new Error("user exist:" + userName), null);			
+		}
+    });
 };

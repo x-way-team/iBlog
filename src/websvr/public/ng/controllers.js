@@ -14,12 +14,27 @@ controllers.controller('MyCtrl1', function () {
 controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $location) {
 }]);
 
-controllers.controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
+controllers.controller('HomeCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
+	$rootScope.show = {
+		login: true,
+		share: true,
+		email: true,
+		signup: true,
+		search: true,
+	};
 	$scope.data = ['haokai','zhengyi','nanssy'];
 }]);
 
 
 controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserManageService', function ($rootScope, $scope, $location, UserManageService) {
+	//登录页面隐藏header部分按钮
+	$rootScope.show = {
+		login: false,
+		share: false,
+		email: false,
+		signup: false,
+		search: false,
+	};
 	$scope.loginData = {
 		userName: '',
 		password: '',
@@ -27,7 +42,7 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 		rememberMe: false
 	};
 	$scope.login = function () {
-		UserManageService.signIn($rootScope.token, $scope.loginData.userName, $scope.loginData.password, checkCode, function(data){
+		UserManageService.signIn($rootScope.token, $scope.loginData.userName, $scope.loginData.password, $scope.loginData.checkCode, function(data){
 			//todo			
 			$location.path('/');//跳转到home页面
 		}, function(msg){
@@ -37,6 +52,13 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 }]);
 
 controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'UserManageService', function ($rootScope, $scope, $location, UserManageService) {
+	$rootScope.show = {
+		login: false,
+		share: false,
+		email: false,
+		signup: false,
+		search: false,
+	};
 	$scope.signUpData = {
 		userName: '',
 		password: '',
@@ -44,10 +66,10 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 		checkCode: ''
 	};
 	$scope.signUp = function () {
-		if (cfmPassword !== password) {
+		if ($scope.signUpData.cfmPassword !== $scope.signUpData.password) {
 			//todo: error and tip,return
 		}
-		UserManageService.signUp($scope.signUpData.userName, $scope.signUpData.password, checkCode, function(data) {
+		UserManageService.signUp($scope.signUpData.userName, $scope.signUpData.password, $scope.signUpData.checkCode, function(data) {
 			$location.path('/login');//注册成功则跳转到login页面
 		}, function(msg){
 			alert(msg);

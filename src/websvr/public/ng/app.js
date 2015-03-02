@@ -21,6 +21,13 @@ myApp.config([
 ]);
   
 myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function ($rootScope, $location, $window, UserManageService) {
+	$rootScope.show = {
+		login: true,
+		share: true,
+		email: true,
+		signup: true,
+		search: true,
+	};
 	UserManageService.createSession(function(data){
 		$rootScope.token = data.content.token;
 	}, function(msg){

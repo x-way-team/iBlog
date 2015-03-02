@@ -25,7 +25,7 @@ router.put('/user', function(req, res){
 
 /* delete user session, user sign out */
 router.delete('/', function(req, res){
-
+	//todo
 });
 
 router.get('/', function(req, res){

@@ -162,7 +162,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
                 checkCode: checkCode
             }
     	};
-    	ApiService.post('/api/user', obj, successcb, failcb);
+    	ApiService.post('/api/users', obj, successcb, failcb);
     };
 
     cfgData.updateUserDetail = function (token, detailObj, successcb, failcb) {
@@ -172,7 +172,7 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
             },
             data: detailObj
     	};
-    	ApiService.put('/api/user', obj, detailObj, successcb, failcb);
+    	ApiService.put('/api/users', obj, detailObj, successcb, failcb);
     };
 
     return cfgData;
