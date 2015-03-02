@@ -9,6 +9,8 @@ router.get('/', function(req, res){
 
 /* create user, user sign up. */
 router.post('/', function(req, res){
+	var token = req.query.token;
+	//todo: verify token
 	var userName = req.body.data.userName;
 	var password = req.body.data.password;
 	var checkCode = req.body.data.checkCode;
@@ -21,6 +23,8 @@ router.post('/', function(req, res){
 
 /* update user info, user setup*/
 router.put('/', function(req, res){
+	var token = req.query.token;
+	//todo: verify token
 	res.json({resultCode:'F'});
 });
 

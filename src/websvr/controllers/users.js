@@ -9,8 +9,8 @@ var guid = require('guid');
 
 //用户首次访问网站，创建session，获取token
 //此时的token不携带用户信息，可用于匿名访问
-exports.createSession = function(cb) {
-	var token = guid.raw();
+exports.createSession = function(sessionId, cb) {
+	var token = sessionId?sessionId:guid.raw();
 	users.createSession(token, function(err, doc){
 		var result = {};
 		if (!err) {
@@ -44,7 +44,9 @@ exports.auth = function(token, userName, password, cb) {
 };
 
 //注册新用户，成功后用户需要再登录
-exports.signUp = function(userName, password, cb) {
+exports.signUp = function(token, userName, password, cb) {
+	//todo: verify token
+	//valid token
 	users.createUser(userName, password, function(err, doc){
 		var result = {};
 		if (!err) {

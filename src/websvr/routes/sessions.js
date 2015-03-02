@@ -5,14 +5,14 @@ var users = require('../controllers/users.js');
 /* create user session */
 /* this happened when a client open site page*/
 router.post('/', function(req, res){
-	users.createSession(function(result) {
+	users.createSession(req.sessionID, function(result) {
 		res.json(result);
 	});	
 });
 
 /*user login*/
 router.put('/user', function(req, res){
-	var token = req.body.data.token;
+	var token = req.query.token;
 	var userName = req.body.data.userName;
 	var password = req.body.data.password;
 	var checkCode = req.body.data.checkCode;
@@ -25,10 +25,14 @@ router.put('/user', function(req, res){
 
 /* delete user session, user sign out */
 router.delete('/', function(req, res){
+	var token = req.query.token;
 	//todo
+	res.json({resultCode:'F'});
 });
 
 router.get('/', function(req, res){
+	var token = req.query.token;
+	//todo
 	res.json({resultCode:'F'});
 });
 
