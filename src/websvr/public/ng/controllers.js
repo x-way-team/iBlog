@@ -69,7 +69,7 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 		if ($scope.signUpData.cfmPassword !== $scope.signUpData.password) {
 			//todo: error and tip,return
 		}
-		UserManageService.signUp($scope.signUpData.userName, $scope.signUpData.password, $scope.signUpData.checkCode, function(data) {
+		UserManageService.signUp($rootScope.token, $scope.signUpData.userName, $scope.signUpData.password, $scope.signUpData.checkCode, function(data) {
 			$location.path('/login');//注册成功则跳转到login页面
 		}, function(msg){
 			alert(msg);

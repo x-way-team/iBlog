@@ -154,17 +154,17 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
         ApiService.delete('/api/session', obj, successcb, failcb);
     };
 
-    cfgData.checkUserName = function (userName, successcb, failcb) {
+    cfgData.checkUserName = function (token, userName, successcb, failcb) {
         var obj = {
             params: {
                 token: token,
                 userName: userName
             }
-        };token: token
+        };
         ApiService.head('/api/user', obj, successcb, failcb);
     };
 
-    cfgData.signUp = function (userName, password, checkCode, successcb, failcb) {
+    cfgData.signUp = function (token, userName, password, checkCode, successcb, failcb) {
     	var obj = {
             params: {
                 token: token
