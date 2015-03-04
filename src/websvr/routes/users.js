@@ -16,7 +16,7 @@ router.post('/', function(req, res){
 	var checkCode = req.body.data.checkCode;
 	//todo: verify checkcode
 	//...
-	users.signUp(userName, password, function(result) {
+	users.signUp(token, userName, password, function(result) {
 		res.json(result);
 	});
 });
