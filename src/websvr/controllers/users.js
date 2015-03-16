@@ -54,7 +54,7 @@ exports.signUp = function(token, userName, password, cb) {
 			result.content = {uid: doc.uid, userName: doc.userName};
 		} else {
 			result.resultCode = 'F';
-			result.errorCode = '1109';
+			result.errorCode ='1101';
 			result.message = err.message;
 		}
 		cb(result);

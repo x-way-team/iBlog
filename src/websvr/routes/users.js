@@ -9,7 +9,8 @@ router.get('/', function(req, res){
 
 /* create user, user sign up. */
 router.post('/', function(req, res){
-	var token = req.query.token;
+	var token=req.body.params.token;
+	// var token = req.query.token;
 	//todo: verify token
 	var userName = req.body.data.userName;
 	var password = req.body.data.password;
