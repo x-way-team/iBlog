@@ -21,12 +21,17 @@ myApp.config([
 ]);
   
 myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function ($rootScope, $location, $window, UserManageService) {
-	$rootScope.show = {
+	$rootScope.show = {//$rootScope全局变量
+		userName:false,
 		login: true,
 		share: true,
 		email: true,
 		signup: true,
 		search: true,
+		logout:false,
+	};
+	$rootScope.user = {
+		userName: ''
 	};
 	UserManageService.createSession(function(data){
 		$rootScope.token = data.content.token;

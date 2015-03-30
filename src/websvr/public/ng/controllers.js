@@ -15,13 +15,6 @@ controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $loc
 }]);
 
 controllers.controller('HomeCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
-	$rootScope.show = {
-		login: true,
-		share: true,
-		email: true,
-		signup: true,
-		search: true,
-	};
 	$scope.data = ['haokai','zhengyi','nanssy'];
 }]);
 
@@ -34,6 +27,8 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 		email: false,
 		signup: false,
 		search: false,
+		logout:false,
+		userName:false,
 	};
 	$scope.loginData = {
 		userName: '',
@@ -43,8 +38,18 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 	};
 	$scope.login = function () {
 		UserManageService.signIn($rootScope.token, $scope.loginData.userName, $scope.loginData.password, $scope.loginData.checkCode, function(data){
-			//todo			
-			$location.path('/');//跳转到home页面
+		//登录成功后到HomePage隐藏header部分按钮
+	   $rootScope.show = {
+		login: false,
+		share: true,
+		email: true,
+		signup: false,
+		search: true,
+		logout:true,
+		userName:true,
+	   };
+	   $rootScope.user.userName = data.content.userName;
+		$location.path('/');//跳转到home页面
 		}, function(msg){
 			alert(msg);
 		}); 
@@ -58,6 +63,8 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 		email: false,
 		signup: false,
 		search: false,
+		logout:false,
+		userName:false,
 	};
 	$scope.signUpData = {
 		userName: '',
@@ -70,6 +77,7 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 			//todo: error and tip,return
 		}
 		UserManageService.signUp($rootScope.token, $scope.signUpData.userName, $scope.signUpData.password, $scope.signUpData.checkCode, function(data) {
+			alert('用户注册成功');
 			$location.path('/login');//注册成功则跳转到login页面
 		}, function(msg){
 			alert(msg);
