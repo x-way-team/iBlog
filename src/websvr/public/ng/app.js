@@ -15,6 +15,7 @@ myApp.config([
 	    $routeProvider.when('/404', { templateUrl: ('partial/404'), controller: 'MyCtrl2' });
 	    $routeProvider.when('/login', { templateUrl: ('partial/login'), controller: 'LoginCtrl' });
 	    $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl' });
+	    $routeProvider.when('/aboutUs', { templateUrl: ('partial/aboutUs'), controller: 'HomeCtrl' });
 	    $routeProvider.otherwise({ redirectTo: '/404' });
 	    $locationProvider.html5Mode(true);
 	}
@@ -32,7 +33,8 @@ myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function (
 	};
 	$rootScope.user = {
 		userName: ''
-	};
+	}; 
+	// var fff = JSON.toString($rootScope.user)
 	UserManageService.createSession(function(data){
 		$rootScope.token = data.content.token;
 	}, function(msg){

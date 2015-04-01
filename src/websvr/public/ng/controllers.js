@@ -15,11 +15,35 @@ controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $loc
 }]);
 
 controllers.controller('HomeCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
+//点击Header部分Logo返回HomePage
+if($rootScope.user.userName!=''){//登录或是注册成功
+	 $rootScope.show = {
+		login: false,
+		share: true,
+		email: true,
+		signup: false,
+		search: true,
+		logout:true,
+		userName:true,
+	   };
+}else{
+	$rootScope.show = {//未登录或注册
+		userName:true,
+		login: true,
+		share: true,
+		email: true,
+		signup: true,
+		search: true,
+		logout:false,
+	};
+}
 	$scope.data = ['haokai','zhengyi','nanssy'];
 }]);
 
 
 controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserManageService', function ($rootScope, $scope, $location, UserManageService) {
+	 //退出操作后将显示用户名赋值为空
+	 $rootScope.user.userName = '';
 	//登录页面隐藏header部分按钮
 	$rootScope.show = {
 		login: false,
@@ -48,6 +72,7 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 		logout:true,
 		userName:true,
 	   };
+	   //显示用户名
 	   $rootScope.user.userName = data.content.userName;
 		$location.path('/');//跳转到home页面
 		}, function(msg){
