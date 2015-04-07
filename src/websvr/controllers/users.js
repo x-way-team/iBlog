@@ -25,6 +25,20 @@ exports.createSession = function(sessionId, cb) {
 	});
 };
 
+exports.deleteSession = function(token, cb) {
+	users.deleteSession(token, function(err){
+		var result = {};
+		if (!err) {
+			result.resultCode = 'S';
+		} else {
+			result.resultCode = 'F';
+			result.errorCode = '1111';
+			result.message = err.message;
+		}
+		cb(result);
+	});
+};
+
 //用户登录，验证用户身份
 //登录成功后，token所代表的session上附加了用户信息
 //登录用户会有更多权限，比如修改用户资料，发表文章等

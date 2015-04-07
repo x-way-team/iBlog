@@ -39,6 +39,15 @@ userObj.createSession = function(token, cb) {
     });
 };
 
+//删除当前session
+userObj.deleteSession = function(token, cb) {
+	userObj.WebSessionModel.remove({ 
+		token: token
+	}, function (err) {
+		cb(err);
+    });
+};
+
 userObj.auth = function(token, userName, password, cb) {
 	userObj.UserModel.findOne({ 
 		userName: userName,

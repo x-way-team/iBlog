@@ -26,6 +26,7 @@ services.factory('ErrCodeLangService', function () {
         "1103": { "zh-cn": "新增使用者账户失败，可能因为使用者已经存在，或者服务器忙碌，请检查后重试" },
         "1109": { "zh-cn": "登入失败，请检查用户名密码，重新登录" },
         "1110": { "zh-cn": "您有内容无权访问，可能是因为与服务器连接已经断开，请重新登录" },
+        "1111": { "zh-cn": "此session已经过期" },
         "2001": { "zh-cn": "无法连接服务器，请稍后重试" }
     };
     var lang = 'zh-cn';
@@ -40,6 +41,7 @@ services.factory('ErrCodeLangService', function () {
     return serviceData;
 });
 
+//封装了http请求
 services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, ErrCodeLangService) {
 	var cfgData = {};
 	cfgData.get = function(url, obj, successcb, failcb) {

@@ -19,8 +19,7 @@
           <button ng-if="show.signup" type="submit" class="btn btn-default">
             <a href="/signup">注册</a>
           </button>
-          <button ng-if="show.logout" type="submit" class="btn btn-default">
-            <a href="/login">退出</a>
+          <button ng-if="show.logout" type="submit" class="btn btn-default" ng-click="signOut()">
           </button>
         </form>
       </div>

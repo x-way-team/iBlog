@@ -7,6 +7,7 @@
 // Declare app level module which depends on filters, and services
 var myApp = angular.module('myApp', ['ngRoute', 
             'myApp.controllers', 'myApp.filters', 'myApp.services', 'myApp.directives']);
+// 针对ng-view的路由映射
 myApp.config([
 	'$routeProvider', 
 	'$locationProvider',
@@ -34,6 +35,14 @@ myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function (
 	$rootScope.user = {
 		userName: ''
 	}; 
+	$rootScope.signOut = function() {
+		UserManageService.signOut($rootScope.token, function(data){
+			alert('您已经成功退出');
+			$location.path('/login');
+		}, function(msg){
+			alert(msg);
+		});
+	};
 	// var fff = JSON.toString($rootScope.user)
 	UserManageService.createSession(function(data){
 		$rootScope.token = data.content.token;
