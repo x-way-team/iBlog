@@ -12,9 +12,9 @@ var services = angular.module('myApp.services', []);
 services.value('version', '0.1a');
 var localeLang = 'zh-cn';
 
-
+//使用Angular提供的API(factory)注册新的服务
 services.factory('ErrCodeLangService', function () {
-    var serviceData = {};
+    var serviceData = {};//定义新服务为obj
     var errMsgTab = {
         "0001": { "zh-cn": "新增失败" },
         "0002": { "zh-cn": "更新失败" },
@@ -38,10 +38,10 @@ services.factory('ErrCodeLangService', function () {
         return errItem[lang];
 	};
 
-    return serviceData;
+    return serviceData;//新服务
 });
 
-//封装了http请求
+//同上,封装了http请求
 services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, ErrCodeLangService) {
 	var cfgData = {};
 	cfgData.get = function(url, obj, successcb, failcb) {
@@ -126,7 +126,7 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 
 	return cfgData;
 }]);
-
+//同上，注册新服务
 services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', function (ApiService, ErrCodeLangService) {
     var cfgData = {};
     cfgData.createSession = function(successcb, failcb) {

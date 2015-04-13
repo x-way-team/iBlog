@@ -14,7 +14,6 @@ var app = exports = module.exports = {
 	Users: users,
 	Contents: contents,
 	Orgs: orgs,
-	DB: mongoose,
 
 	config_data: {url:null},
 	error_cb: null,

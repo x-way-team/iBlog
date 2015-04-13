@@ -26,7 +26,7 @@ router.put('/user', function(req, res){
 /* delete user session, user sign out */
 router.delete('/', function(req, res){
 	var token = req.query.token;
-	user.deleteSession(req.sessionID, function(result) {
+	users.deleteSession(req.sessionID, function(result) {
 		res.json(result);
 	});
 });

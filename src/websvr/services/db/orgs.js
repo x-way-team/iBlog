@@ -1,8 +1,8 @@
 'use strict';
+var model = require('./model');
 
-var app = null;
-var db = null;
-exports.init = function (ap){
-	app = ap;
-	db = app.DB;
+var orgObj = exports = module.exports = {};
+
+exports.init = function (ap) {
+	orgObj.app = ap;
 };
