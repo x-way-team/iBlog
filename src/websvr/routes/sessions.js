@@ -12,7 +12,7 @@ router.post('/', function(req, res){
 
 /*user login*/
 router.put('/user', function(req, res){
-	var token = req.query.token;
+	var token=req.body.params.token;
 	var userName = req.body.data.userName;
 	var password = req.body.data.password;
 	var checkCode = req.body.data.checkCode;

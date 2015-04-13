@@ -17,7 +17,14 @@ userObj.createSession = function(token, cb) {
                 token: token
             };
             var newData = new model.WebSessionModel(newDoc);
-            cb(null, newDoc);
+            newData.save(function(err, sdata) {
+                if (!err) {
+                    cb(null, sdata);
+                } else {
+                    cb(new Error("internal error, failed to save token " + token), null);
+                }
+            });
+            
         } else {
             cb(new Error("internal error, conflict token " + token), null);            
         }
@@ -33,24 +40,52 @@ userObj.deleteSession = function(token, cb) {
     });
 };
 
-userObj.auth = function(token, userName, password, cb) {
-    model.UserModel.findOne({ 
-        userName: userName,
-        password: password
+userObj.verifyToken = function(token, cb) {
+    model.WebSessionModel.findOne({ 
+        token: token
     }, function (err, doc) {
-        if (err) {
-            cb(err, doc);
-        } else if(!doc){
-            cb(new Error("check user failed"), doc);
-        } else {
-            var newDoc = {
-                token: token,
-                uid: doc.uid,
-                userName: doc.userName
-            };
-            var newData = new model.WebSessionModel(newDoc);
-            cb(null, newDoc);
+        if (err || !doc) {
+            cb(new Error("token " + token + ' not found'), null);       
+        } else {            
+            cb(null, doc);     
         }
+    });
+};
+
+
+userObj.auth = function(token, userName, password, cb) {
+    userObj.verifyToken(token, function(err, sdoc) {
+        if (err) {
+            cb(err, sdoc);
+        } else {
+            if (sdoc.userName && sdoc.userName !== userName) {
+                cb(new Error('auth user not match'), null);
+            } else {
+                model.UserModel.findOne({ 
+                    userName: userName,
+                    password: password
+                }, function (err, doc) {
+                    if (err) {
+                        cb(err, doc);
+                    } else if(!doc){
+                        cb(new Error("check user failed"), doc);
+                    } else {
+                        sdoc.userName = doc.userName;
+                        sdoc.uid = doc.uid;
+                        sdoc.save(function(err, sessionDoc){
+                            //console.log('user session saved');
+                        });
+                        var newDoc = {
+                            token: token,
+                            uid: doc.uid,
+                            userName: doc.userName
+                        };
+                        cb(null, newDoc);
+                    }
+                });
+            }
+        }
+
     });
 };
 
