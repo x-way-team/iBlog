@@ -60,7 +60,7 @@ var SubjectSchema = new Schema({
 
 
 //操作
-contentObj.init = function (app) {
+contentObj.init = function (ap) {
     contentObj.app = ap;
     contentObj.db = ap.DB;    
 };

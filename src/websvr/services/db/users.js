@@ -18,7 +18,7 @@ var UserSchema = new Schema({
     password: String,
     createDate: Date,
 	locked: Boolean, //管理员锁定账号
-    property: UserPropertySchema,
+    // property: UserPropertySchema,
 
 });
 var WebSessionSchema = new Schema({
