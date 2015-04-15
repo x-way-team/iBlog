@@ -10,16 +10,16 @@
     <div class="col-xs-4">
       <div class="row">
         <form class="navbar-form navbar-left" role="search">
-          <button ng-if="show.login" type="submit" class="btn btn-default">
+         <button ng-if="show.login" type="submit" class="btn btn-default">
             <a href="/login">登录</a>
-          </button>
-          <a ng-if="show.userName" role="presentation"  href="#">{{user.userName}}</a>
-          <button ng-if="show.share" type="submit" class="btn btn-default">分享</button>
-          <button ng-if="show.email" type="submit" class="btn btn-default">邮件</button>
-          <button ng-if="show.signup" type="submit" class="btn btn-default">
+         </button>
+         <a ng-if="show.userName" role="presentation"  href="#">{{user.userName}}</a>
+         <button ng-if="show.share" type="submit" class="btn btn-default">分享</button>
+         <button ng-if="show.email" type="submit" class="btn btn-default">邮件</button>
+         <button ng-if="show.signup" type="submit" class="btn btn-default">
             <a href="/signup">注册</a>
-          </button>
-        <button ng-if="show.logout" type="submit" class="btn btn-default" ng-click="signOut()">退出</button>
+         </button>
+         <button ng-if="show.logout" type="submit" class="btn btn-default" ng-click="signOut()">退出</button>
         </form>
       </div>
       <div ng-if="show.search" class="row">
@@ -42,7 +42,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/">
+          <span class="glyphicon glyphicon-home" aria-hidden="true">HOME</span>
+        </a>
       </div>
     </div>
     <div class="col-xs-3">
@@ -53,7 +55,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/aboutUs">AboutUs</a>
+        <a class="navbar-brand" href="/aboutUs">ABOUT</a>
       </div>
     </div>
     <div class="col-xs-3">
@@ -64,7 +66,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Members</a>
+        <a class="navbar-brand" href="#">MEMBERS</a>
       </div>
     </div>
     <div class="col-md-3">
@@ -75,7 +77,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Clients</a>
+        <a class="navbar-brand" href="#">CLIENTS</a>
       </div>
     </div>
   </nav>

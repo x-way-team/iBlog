@@ -153,7 +153,8 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
         		token: token
             }
     	};
-        ApiService.delete('/api/session', obj, successcb, failcb);
+
+        ApiService.delete('/api/session/user', obj, successcb, failcb);
     };
 
     cfgData.checkUserName = function (token, userName, successcb, failcb) {
