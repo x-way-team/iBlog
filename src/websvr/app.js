@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require('express');//
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -19,7 +19,7 @@ var db = require("./services/db")
 
 var app = express();
 
-// view engine setup
+// view engine setup制定规则
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

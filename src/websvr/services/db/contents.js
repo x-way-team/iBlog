@@ -15,7 +15,7 @@ contentObj.createArticle = function(uid, title, cb) {
     //todo
 };
 
-//修改后保存文章
+//更新文章
 contentObj.updateArticle = function(id, articleObj, cb) {
     //todo
 };
@@ -25,7 +25,12 @@ contentObj.commitArticle = function(id, cb) {
     //todo
 };
 
-//不公布文章
-contentObj.stageArticle = function(id, cb) {
+//封锁文章
+contentObj.lockArticle = function(id, cb) {
+    //todo
+};
+
+//解锁文章
+contentObj.unlockArticle = function(id, cb) {
     //todo
 };
