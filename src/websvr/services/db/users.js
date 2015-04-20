@@ -1,6 +1,7 @@
 'use strict';
 
 var model = require('./model');
+var guid = require('guid');
 
 var userObj = exports = module.exports = {};
 //方法
@@ -11,8 +12,8 @@ userObj.init = function(ap) {
 userObj.createSession = function(token, cb) {
     model.WebSessionModel.findOne({ 
         token: token
-    }, function (err, doc) {
-        if (err || !doc) {
+    }, function (err, doc) {//findOne的回调结果
+        if (err || !doc) {//成功
             var newDoc = {
                 token: token
             };
@@ -25,7 +26,7 @@ userObj.createSession = function(token, cb) {
                 }
             });
             
-        } else {
+        } else {//失败
             cb(new Error("internal error, conflict token " + token), null);            
         }
     });
@@ -54,7 +55,7 @@ userObj.verifyToken = function(token, cb) {
 
 
 userObj.auth = function(token, userName, password, cb) {
-    userObj.verifyToken(token, function(err, sdoc) {
+    userObj.verifyToken(token, function(err, sdoc) {//接口verifyToken的回调结果进行处理
         if (err) {
             cb(err, sdoc);
         } else {
@@ -100,7 +101,7 @@ userObj.createUser = function(userName, password, cb) {
             };
             var newData = new model.UserModel(newDoc).save(function(err, user){
                 if (!err) {
-                    newDoc.uid = user._id;
+                    newDoc.uid = guid.raw();
                     cb(null, newDoc);
                 } else {
                     console.log(err, user);
