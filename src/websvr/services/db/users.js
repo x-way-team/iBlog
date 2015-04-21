@@ -96,12 +96,12 @@ userObj.createUser = function(userName, password, cb) {
     }, function (err, doc) {
         if (err || !doc) {
             var newDoc = {
+                uid: guid.raw(),
                 userName: userName,
-                password: password
+                password: password,
             };
             var newData = new model.UserModel(newDoc).save(function(err, user){
                 if (!err) {
-                    newDoc.uid = guid.raw();
                     cb(null, newDoc);
                 } else {
                     console.log(err, user);

@@ -50,6 +50,7 @@ var ArticleSchema = new Schema({
     modifyOn: Date,         //最后修改日期
     status: {type: String, enum: ['staged', 'committed', 'locked']},
     //附加元素
+    topic: String,          //用于首页的分类
     forks: [String],        //从若干篇文章的副本组合而成，
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
     mark: [String],         //由管理员打的标记，从网站活动中获取
@@ -93,6 +94,11 @@ var SubjectSchema = new Schema({
     modifyOn: Date
 });
 
+//专题
+var TopicSchema = new Schema({
+    name: {type: String, unique: true, required: true},
+    description: String,
+});
 
 //组织模型
 var OrgMemberSchema = new Schema({
@@ -124,9 +130,10 @@ var EventSchema = new Schema({
 //表
 model.UserModel = mongoose.model('iblog.users', UserSchema);
 model.WebSessionModel = mongoose.model('iblog.websession', WebSessionSchema);
-model.ArticleModel = mongoose.model('iblog.articles', ArticleSchema);
+model.ArticleModel = mongoose.model('iblog.articles', ArticleSchema);//
 model.CollectionModel = mongoose.model('iblog.collecions', CollectionSchema);
 model.CommentModel = mongoose.model('iblog.comments', CommentsSchema);
 model.SubjectModel = mongoose.model('iblog.subjects', SubjectSchema);
+model.TopicModel = mongoose.model('iblog.topics', TopicSchema);
 model.OrgnizationModel = mongoose.model('iblog.orgs', OrgnizationSchema);
 model.EventModel = mongoose.model('iblog.events', EventSchema);
