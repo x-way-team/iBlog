@@ -38,23 +38,25 @@ var WebSessionSchema = new Schema({
 
 //文章模型
 var ArticleSchema = new Schema({
-    //最基本的文章包含的元素
+    //创建后不可修改的或由业务逻辑控制修改的
     id: {type: String, unique: true, required: true},
     author: String,         //作者的userid
+    createOn: {type:Date, default: Date.now},       //创建日期
+    modifyOn: Date,         //最后修改日期
+    status: {type: String, enum: ['staged', 'committed', 'locked'], default: 'staged'},
+    mark: [String],         //由管理员打的标记，从网站活动中获取
+    visits: Number,         //被访问次数
+
+    //可修改的
     title: String,          //文章名
     keywords: [String],     //文章的关键字
     references: [String],   //引用的文章的id
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
     content: String,        //实际内容，markdown格式
-    createOn: {type:Date, default: Date.now},       //创建日期
-    modifyOn: Date,         //最后修改日期
-    status: {type: String, enum: ['staged', 'committed', 'locked']},
     //附加元素
     topic: String,          //用于首页的分类
     forks: [String],        //从若干篇文章的副本组合而成，
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
-    mark: [String],         //由管理员打的标记，从网站活动中获取
-    visits: Number,         //被访问次数
 });
 
 //用户收集的文章集合
@@ -72,7 +74,8 @@ var CommentSchema = new Schema({
     author: String,         //作者的userid
     content: String,        //评论内容，markdown格式
     createOn: {type:Date, default: Date.now},       //创建日期
-    modifyOn: Date        //最后修改日期
+    modifyOn: Date,         //最后修改日期
+    locked: Boolean,        //管理员禁用评论
 });
 
 //针对一篇文章评论的容器

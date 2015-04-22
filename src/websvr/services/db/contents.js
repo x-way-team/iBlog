@@ -19,29 +19,83 @@ contentObj.createArticle = function(uid, title, cb) {
         title: title,
     };
     var newData = new model.ArticleModel(newArticle);
-    newData.save(function(err, arti) {//save接口的回调结果
+    newData.save(function(err, newDoc) {//save接口的回调结果
         if (!err) {//save成功
-            cb(null, arti.id);
+            //同时创建评论容器
+            var newComments = new model.CommentModel({
+                id: guid.raw(),
+                commentTo: newDoc.id,
+                comments: [],
+            });
+
+            cb(null, newDoc.id);
         } else {//save失败
-        	console.log(err, arti.id);
-            cb(new Error("internal error, failed to save this article:"+ title +","+ arti.id), null);
+        	console.log(err, newDoc.id);
+            cb(new Error("internal error, failed to save this article:"+ title +","+ newDoc.id), null);
         }
     });
 };
 
 //更新文章
 contentObj.updateArticle = function(id, articleObj, cb) {
-    //todo
+    model.ArticleModel.findOne({
+        id:id
+    }, function(err, doc){
+        if (!err && doc) {
+            for (key in articleObj) {
+                doc[key] = articleObj[key];
+                doc.modifyOn = Date.now();
+            }
+            doc.save(function(err, data){
+                cb(err, data);
+            });
+        } else {
+            cb(err, null);
+        }
+    });
 };
 
 //得到文章数据
-contentObj.getArticle = function(id, cb) {
-    //todo
+contentObj.getArticleForRead = function(id, cb) {
+     model.ArticleModel.findOne({id: id})
+     .select('id author modifyOn mark visits title keywords references content topic')
+     .exec(function(err, doc){
+        if (!err && doc) {
+            model.CommentModel.findOne({id:id}, function(err, cdoc) {
+                if (!err && cdoc) {
+                    doc.comments = cdoc;
+                    cb(null, doc);
+                } else {
+                    cb (err, null);
+                }
+            });
+        } else {
+            cb(err, null);
+        }
+    });
 };
 
 //公布文章
 contentObj.commitArticle = function(id, cb) {
     //todo
+    model.ArticleModel.findOne({id: id}, function(err, doc) {
+        if (!err && doc) {
+            if (doc.status !== 'staged') {
+                cb(new Error('Forbidden to commit article'), null);
+            } else {
+                doc.status = 'committed';
+                doc.save(function(err, doc){
+                    if (!err) {
+                        cb(null, true);
+                    } else {
+                        cb(err, null);
+                    }
+                });
+            }
+        } else {
+            cb(err, null);
+        }
+    });
 };
 
 //封锁文章
