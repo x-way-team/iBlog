@@ -53,7 +53,7 @@ userObj.verifyToken = function(token, cb) {
     });
 };
 
-
+//用户登录，验证用户身份
 userObj.auth = function(token, userName, password, cb) {
     userObj.verifyToken(token, function(err, sdoc) {//接口verifyToken的回调结果进行处理
         if (err) {

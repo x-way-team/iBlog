@@ -13,7 +13,34 @@ controllers.controller('MyCtrl1', function () {
 
 controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $location) {
 }]);
-
+controllers.controller('TopicsCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
+//点击Header部分Logo返回HomePage
+if($rootScope.user.userName!=''){//登录或是注册成功
+	 $rootScope.show = {
+		login: false,
+		share: true,
+		email: true,
+		signup: false,
+		search: true,
+		logout:true,
+		userName:true,
+		client:false,
+		myblog:true
+	   };
+}else{
+	$rootScope.show = {//未登录或注册
+		userName:true,
+		login: true,
+		share: true,
+		email: true,
+		signup: true,
+		search: true,
+		logout:false,
+		client:true,
+		myblog:false
+	};
+}
+}]);
 controllers.controller('HomeCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
 //点击Header部分Logo返回HomePage
 if($rootScope.user.userName!=''){//登录或是注册成功
@@ -25,6 +52,8 @@ if($rootScope.user.userName!=''){//登录或是注册成功
 		search: true,
 		logout:true,
 		userName:true,
+		client:false,
+		myblog:true
 	   };
 }else{
 	$rootScope.show = {//未登录或注册
@@ -35,6 +64,8 @@ if($rootScope.user.userName!=''){//登录或是注册成功
 		signup: true,
 		search: true,
 		logout:false,
+		client:true,
+		myblog:false
 	};
 }
 	$scope.data = ['haokai','zhengyi','nanssy'];
@@ -53,6 +84,8 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 		search: false,
 		logout:false,
 		userName:false,
+		client:true,
+		myblog:false
 	};
 	$scope.loginData = {
 		userName: '',
@@ -71,6 +104,8 @@ controllers.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'UserM
 		search: true,
 		logout:true,
 		userName:true,
+		client:false,
+		myblog:true
 	   };
 	   //显示用户名
 	   $rootScope.user.userName = data.content.userName;
@@ -90,6 +125,8 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 		search: false,
 		logout:false,
 		userName:false,
+		client:true,
+		myblog:false
 	};
 	$scope.signUpData = {
 		userName: '',

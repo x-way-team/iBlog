@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var apiUsers = require('./routes/users');
 var apiSessions = require('./routes/sessions');
+var apicontents = require('./routes/contents');
 
 var db = require("./services/db")
 .error(function(err){

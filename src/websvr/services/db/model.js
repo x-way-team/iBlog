@@ -50,7 +50,7 @@ var ArticleSchema = new Schema({
     modifyOn: Date,         //最后修改日期
     status: {type: String, enum: ['staged', 'committed', 'locked']},
     //附加元素
-    topic: String,          //用于首页的分类
+    topic: String,          //用于首页的分类，topic id
     forks: [String],        //从若干篇文章的副本组合而成，
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
     mark: [String],         //由管理员打的标记，从网站活动中获取
@@ -103,7 +103,8 @@ var TopicSchema = new Schema({
 //组织模型
 var OrgMemberSchema = new Schema({
     memberId: {type: String, unique: true, required: true}, //成员uid
-    createSubjectEnabled: Boolean,
+    createSubjectEnabled: Boolean,//组织内写手的权限，还需扩展
+    subjectAllowed:[String], //subject ids
 });
 
 var OrgSubjectSchema = new Schema({

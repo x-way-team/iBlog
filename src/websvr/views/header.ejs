@@ -66,10 +66,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">MEMBERS</a>
+        <a class="navbar-brand" href="/topics">TOPICS</a>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-xs-3">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
@@ -77,8 +77,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">CLIENTS</a>
-      </div>
+        <a ng-if="show.client" class="navbar-brand" href="#">CLIENT</a>
+        <a ng-if="show.myblog" class="navbar-brand" href="/myblog">MY BLOG</a>
+       
     </div>
   </nav>
 </div>
