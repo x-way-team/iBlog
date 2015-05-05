@@ -146,3 +146,7 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
 		}); 
 	};
 }]);
+
+controllers.controller('ArticleEditCtrl', ['$scope', function ($scope) {
+	$scope.content={};
+}]);
