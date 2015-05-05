@@ -55,9 +55,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/aboutUs">ABOUT</a>
+        <a ng-if="show.client" class="navbar-brand" href="#">CLIENT</a>
+        <a ng-if="show.myblog" class="navbar-brand" href="/myblog">MY BLOG</a>
       </div>
     </div>
+
     <div class="col-xs-3">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -77,9 +79,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a ng-if="show.client" class="navbar-brand" href="#">CLIENT</a>
-        <a ng-if="show.myblog" class="navbar-brand" href="/myblog">MY BLOG</a>
-       
+        <a class="navbar-brand" href="/aboutUs">ABOUT</a>
+      </div>
     </div>
   </nav>
 </div>
