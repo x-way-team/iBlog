@@ -5,23 +5,28 @@
 
 
 // Declare app level module which depends on filters, and services
-var myApp = angular.module('myApp', ['ngRoute', 
+var myApp = angular.module('myApp', ['ngRoute', 'ngSanitize', 'btford.markdown',
             'myApp.controllers', 'myApp.filters', 'myApp.services', 'myApp.directives']);
 // 针对ng-view的路由映射
 myApp.config([
     '$routeProvider', 
     '$locationProvider',
-    function($routeProvider, $locationProvider) {
+    'markdownConverterProvider',
+    function($routeProvider, $locationProvider, markdownConverterProvider) {
         $routeProvider.when('/', { templateUrl: ('partial/home'), controller: 'HomeCtrl' });
         $routeProvider.when('/404', { templateUrl: ('partial/404'), controller: 'MyCtrl2' });
         $routeProvider.when('/login', { templateUrl: ('partial/login'), controller: 'LoginCtrl' });
         $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl' });
         $routeProvider.when('/aboutUs', { templateUrl: ('partial/aboutUs'), controller: 'HomeCtrl' });
-         $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'HomeCtrl' });
-         $routeProvider.when('/topics-home', { redirectTo: 'topics/main'});//l路径重定向
+        $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'HomeCtrl' });
+        $routeProvider.when('/topics-home', { redirectTo: 'topics/main'});//l路径重定向
         $routeProvider.when('/topics/:urlparam', { templateUrl:'topics.ejs', controller: 'TopicsCtrl' });
+        $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl' });
         $routeProvider.otherwise({ redirectTo: '/404' });
         $locationProvider.html5Mode(true);
+        markdownConverterProvider.config({
+            extensions: ['twitter']
+        });
     }
 ]);
   
