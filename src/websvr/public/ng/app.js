@@ -25,7 +25,7 @@ myApp.config([
         $routeProvider.otherwise({ redirectTo: '/404' });
         $locationProvider.html5Mode(true);
         markdownConverterProvider.config({
-            extensions: ['twitter']
+            extensions: ['github']
         });
     }
 ]);
