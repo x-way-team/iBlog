@@ -1,8 +1,33 @@
 <div class="row">
-	<div class= "col-md-12">
-		<textarea class="row" ng-model="content.md">
-		</textarea>
-		<div class="row" btf-markdown="content.md">
-		</div>
-	</div>
+    <div class="col-md-6">
+        <form>
+            <div class="form-group">
+                <label for="editTitle">主题</label>
+                <input type="text" class="form-control" id="editTitle" placeholder="我的标题" ng-model="article.title"> 
+            </div>
+            <div class="form-group">
+                <label for="editKeys">关键字</label>
+                <input type="text" class="form-control" id="editKeys" placeholder="我的关键字，逗号或分号隔开" ng-model="article.keys"> 
+            </div>
+            <div class="form-group">
+                <label for="editContent">内容</label>
+                <textarea class="form-control" id="editContent" placeholder="我的内容" ng-model="article.content"/>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <article>
+            <header>
+                <h1>{{article.title}}</h1>
+                <hr>
+            </header>
+            <details>
+                <summary>关键字</summary>
+                <span class="badge">{{article.keys}}</span>
+                <hr>
+            </details>
+            <section btf-markdown="article.content">
+            </section>
+        </article>
+    </div>
 </div>
