@@ -19,8 +19,8 @@ myApp.config([
         $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl' });
         $routeProvider.when('/aboutUs', { templateUrl: ('partial/aboutUs'), controller: 'HomeCtrl' });
         $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'HomeCtrl' });
-        $routeProvider.when('/topics-home', { redirectTo: 'topics/main'});//l路径重定向
-        $routeProvider.when('/topics/:urlparam', { templateUrl:'topics.ejs', controller: 'TopicsCtrl' });
+        $routeProvider.when('/topics', { redirectTo: '/topics/main'});//l路径重定向
+        $routeProvider.when('/topics/:urlparam', { templateUrl:'partial/topics', controller: 'TopicsCtrl' });
         $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl' });
         $routeProvider.otherwise({ redirectTo: '/404' });
         $locationProvider.html5Mode(true);

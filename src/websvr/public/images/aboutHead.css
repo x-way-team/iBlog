@@ -1,0 +1,19 @@
+.aboutHead {
+background: transparent url("/images/DISPLAY_5.png") 0px 0px no-repeat;
+position: relative;
+height: 170px;
+border-bottom: 1px solid #eee;
+margin-bottom: 0;
+overflow: hidden;
+}
+.aboutHead h2 {
+color: #FFF;
+background-color: transparent !important;
+position: absolute;
+font-size: 38px;
+width: 50%;
+padding-right: 0;
+margin-left: 50px;
+margin-top: 100px;
+text-shadow: 2px 2px 0px rgba(0,0,0,.75);
+}
