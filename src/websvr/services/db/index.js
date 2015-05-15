@@ -20,8 +20,9 @@ var app = exports = module.exports = {
 	state: "uninit",
 };
 
-app.config = function(dbUrl) {
+app.config = function(dbUrl, dbOptions) {
 	app.config_data.url = dbUrl;
+	app.config_data.options = dbOptions;
 	app.state = "config";
 	return app;
 };

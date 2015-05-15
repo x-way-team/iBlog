@@ -5,10 +5,10 @@
 */
 
 var contents = require("../services/db").Contents;
-var guid = require('guid');
+var uuid = require('uuid');
 //创建新文章
   exports.creatAticle = function(title, cb) {
-  	var uid =guid.raw();
+  	var uid = uuid.v4();
 	contents.createArticle(uid, title, function(err, doc){
 		var result = {};
 		if (!err) {

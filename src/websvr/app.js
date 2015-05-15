@@ -7,16 +7,31 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var apiUsers = require('./routes/users');
-var apiSessions = require('./routes/sessions');
-var apicontents = require('./routes/contents');
+//config init
+var config = require('./services/config').load('./config.json', function(err) {
+    if (err) {
+        console.error(err);
+        process.exit(1);
+    }
+}).data;
 
 var db = require("./services/db")
 .error(function(err){
     console.log(err);
-}).config("mongodb://root:borlandc@localhost/iblogdb")
+}).config(config.db.url, config.db.options)
 .start();
+
+//cache init
+var cache = require("./services/cache");
+cache.init(function(err){
+    console.error(err);
+    process.exit(1);
+});
+
+var routes = require('./routes/index');
+var apiUsers = require('./routes/users');
+var apiSessions = require('./routes/sessions');
+var apicontents = require('./routes/contents');
 
 var app = express();
 

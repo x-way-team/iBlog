@@ -113,16 +113,18 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
     cfgData.head = function(url, obj, successcb, failcb) {
         obj.timeout = (1000*30);
         $http.head(url, obj)
-        .success(function (data) {
-            if (data.resultCode === 'S') {
+        .success(function (data, status) {
+            if (status == 200) {
                 successcb(data);
             } else {
-                failcb(ErrCodeLangService.getErrMsg(data.errorCode));
-                console.error(data.errorCode, data.message);
+                var errCode = status;
+                var errMsg = 'Resource not found';
+                failcb(errMsg);
+                console.error(errCode, errMsg);
             }
         }).error(function (data,status, headers, config) {
             failcb('Request error!');
-            console.error(data);
+            console.error(data, status);
         });
     };
 
@@ -134,7 +136,9 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
     cfgData.createSession = function(successcb, failcb) {
         ApiService.post('/api/session', {}, successcb, failcb);
     };
-
+    cfgData.verifyToken = function(token, successcb, failcb) {
+        ApiService.head('/api/session', {params: {token:token}}, successcb, failcb);
+    };
     cfgData.signIn = function (token, userName, password, checkCode, successcb, failcb) {
     	var obj = {
             params: {

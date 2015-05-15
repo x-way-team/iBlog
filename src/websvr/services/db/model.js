@@ -16,6 +16,7 @@ var UserSchema = new Schema({
     uid: {type: String, unique: true, required: true},
     userName: {type: String, unique: true, required: true},
     password: String,
+    nickName: String,
     email: {type: String, unique: true},
     phone: {type: String, unique: true},
     createOn: {type:Date, default: Date.now},

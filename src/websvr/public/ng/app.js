@@ -55,7 +55,17 @@ myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function (
     if (typeof(Storage) !== 'undefined') {
     // Yes! localStorage and sessionStorage support!
         if (sessionStorage.iBlogToken) {
-            $rootScope.token = sessionStorage.iBlogToken;
+            var token = sessionStorage.iBlogToken;
+            UserManageService.verifyToken(token, function(data) {
+                $rootScope.token = token;
+            }, function(err) {
+                UserManageService.createSession(function(data){
+                    $rootScope.token = data.content.token;
+                    sessionStorage.iBlogToken = $rootScope.token;
+                }, function(msg){
+                    alert(msg);
+                });
+            });
         } else {
             UserManageService.createSession(function(data){
                 $rootScope.token = data.content.token;

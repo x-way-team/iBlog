@@ -1,0 +1,22 @@
+{
+    "cache": {
+        "sessions": {
+            "dbNum": 1,
+            "host": "127.0.0.1",
+            "port": 6379
+            // "options": {
+            //     "password": "sofar"
+            // }
+        }
+    },
+    "db": {
+        "url": "mongodb://localhost/iblogdb",
+        "options":{
+            // "user": "admin",
+            // "pass": "sonix123",
+            // "auth": { 
+            //     "authdb": "admin" 
+            // }
+        }
+    }
+}

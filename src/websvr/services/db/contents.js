@@ -1,7 +1,7 @@
 'use strict';
 
 var model = require('./model');
-var guid = require('guid');
+var uuid = require('uuid');
 
 var contentObj = exports = module.exports = {};
 
@@ -14,7 +14,7 @@ contentObj.init = function (ap) {
 //返回文章Id
 contentObj.createArticle = function(uid, title, cb) {
     var newArticle = {
-        id: guid.raw(),
+        id: uuid.v4(),
         author: uid,
         title: title,
     };
@@ -23,7 +23,7 @@ contentObj.createArticle = function(uid, title, cb) {
         if (!err) {//save成功
             //同时创建评论容器
             var newComments = new model.CommentModel({
-                id: guid.raw(),
+                id: uuid.v4(),
                 commentTo: newDoc.id,
                 comments: [],
             });
