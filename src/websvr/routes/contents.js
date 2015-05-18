@@ -6,11 +6,12 @@ var contents = require('../controllers/contents.js');
 
 /* create new article */
 router.post('/', function(req, res){
-	//todo: verify title
-	var data = req.body.data;
-	contents.creatAticle(data, function(result) {
-		res.json(result);
-	});
+    //todo: verify title
+    var token = req.body.params.token;
+    var data = req.body.data;
+    contents.creatAticle(token, data, function(result) {
+        res.json(result);
+    });
 });
 
 
