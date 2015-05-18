@@ -7,8 +7,8 @@ var contents = require('../controllers/contents.js');
 /* create new article */
 router.post('/', function(req, res){
 	//todo: verify title
-	var title = req.body.data.title;
-	contents.creatAticle(title, function(result) {
+	var data = req.body.data;
+	contents.creatAticle(data, function(result) {
 		res.json(result);
 	});
 });

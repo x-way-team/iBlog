@@ -12,12 +12,14 @@ contentObj.init = function (ap) {
 
 //创建文章
 //返回文章Id
-contentObj.createArticle = function(uid, title, cb) {
+contentObj.createArticle = function(uid, data, cb) {
     var newArticle = {
         id: uuid.v4(),
-        author: uid,
-        title: title,
+        author: uid
     };
+    for (key in data) {
+        newArticle[key] = data[key];
+    }
     var newData = new model.ArticleModel(newArticle);
     newData.save(function(err, newDoc) {//save接口的回调结果
         if (!err) {//save成功
