@@ -130,6 +130,25 @@ services.factory('ApiService', ['$http', 'ErrCodeLangService', function ($http, 
 
 	return cfgData;
 }]);
+
+services.factory('PermissionsService', function ($rootScope) {
+    var permissionList;
+        return {
+            setPermissions: function(permissions) {
+            permissionList = permissions;
+            $rootScope.$broadcast('permissionsChanged')
+        },
+        hasPermission: function (permission) {
+            permission = permission.trim();
+            return _.some(permissionList, function(item) {
+              if(_.isString(item.Name))
+                return item.Name.trim() === permission
+            });
+        }
+    };
+});
+
+
 //同上，注册新服务
 services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', function (ApiService, ErrCodeLangService) {
     var cfgData = {};
@@ -194,8 +213,32 @@ services.factory('UserManageService', ['ApiService', 'ErrCodeLangService', funct
             },
             data: detailObj
     	};
-    	ApiService.put('/api/users', obj, detailObj, successcb, failcb);
+    	ApiService.put('/api/users', obj, successcb, failcb);
     };
-
     return cfgData;
 }]);
+
+//注册新的服务
+services.factory('ArticleManageService',['ApiService',function (ApiService) {
+    var articleData = {};
+    articleData.saveArticle = function (token, articleObj, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            },
+            data: articleObj
+        };
+        ApiService.post('/api/contents', obj, successcb, failcb);
+    };
+    articleData.loadArticles = function (token, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            }
+        };
+        ApiService.get('/api/contents', obj, successcb, failcb);
+    };
+    return articleData;
+}]);
+
+

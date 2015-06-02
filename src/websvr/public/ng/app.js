@@ -13,15 +13,15 @@ myApp.config([
     '$locationProvider',
     'markdownConverterProvider',
     function($routeProvider, $locationProvider, markdownConverterProvider) {
-        $routeProvider.when('/', { templateUrl: ('partial/home'), controller: 'HomeCtrl' });
-        $routeProvider.when('/404', { templateUrl: ('partial/404'), controller: 'MyCtrl2' });
-        $routeProvider.when('/login', { templateUrl: ('partial/login'), controller: 'LoginCtrl' });
-        $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl' });
+        $routeProvider.when('/', { templateUrl: ('partial/home'), controller: 'HomeCtrl', permission: 'none' });
+        $routeProvider.when('/404', { templateUrl: ('partial/404'), controller: 'MyCtrl2', permission: 'none' });
+        $routeProvider.when('/login', { templateUrl: ('partial/login'), controller: 'LoginCtrl', permission: 'none' });
+        $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl', permission: 'none' });
         $routeProvider.when('/aboutUs', { templateUrl: ('partial/aboutUs'), controller: 'HomeCtrl' });
-        $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'HomeCtrl' });
+        $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'MyblogCtrl' });
         $routeProvider.when('/topics', { redirectTo: '/topics/main'});//l路径重定向
-        $routeProvider.when('/topics/:urlparam', { templateUrl:'partial/topics', controller: 'TopicsCtrl' });
-        $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl' });
+        $routeProvider.when('/topics/:urlparam', { templateUrl:'partial/topics', controller: 'TopicsCtrl', permission: 'user' });
+        $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl', permission: 'user' });
         $routeProvider.otherwise({ redirectTo: '/404' });
         $locationProvider.html5Mode(true);
         markdownConverterProvider.config({
@@ -51,6 +51,7 @@ myApp.run(['$rootScope', '$location', '$window', 'UserManageService', function (
             alert(msg);
         });
     };
+
 
     if (typeof(Storage) !== 'undefined') {
     // Yes! localStorage and sessionStorage support!

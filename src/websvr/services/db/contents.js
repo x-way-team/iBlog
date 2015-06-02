@@ -17,7 +17,7 @@ contentObj.createArticle = function(uid, data, cb) {
         id: uuid.v4(),
         author: uid
     };
-    for (key in data) {
+    for (var key in data) {
         newArticle[key] = data[key];
     }
     var newData = new model.ArticleModel(newArticle);
@@ -44,7 +44,7 @@ contentObj.updateArticle = function(id, articleObj, cb) {
         id:id
     }, function(err, doc){
         if (!err && doc) {
-            for (key in articleObj) {
+            for (var key in articleObj) {
                 doc[key] = articleObj[key];
                 doc.modifyOn = Date.now();
             }
@@ -56,12 +56,23 @@ contentObj.updateArticle = function(id, articleObj, cb) {
         }
     });
 };
-
+//得到当前用户文章列表
+contentObj.getArticles = function(userId, cb) {
+    model.ArticleModel.find({author: userId})
+    .select('id title status visits')
+    .exec(function(err, docs){
+        if (!err && docs) {
+            cb(null, docs);
+        } else {
+            cb(err, null);
+        }
+    });
+};
 //得到文章数据
-contentObj.getArticleForRead = function(id, cb) {
-     model.ArticleModel.findOne({id: id})
-     .select('id author modifyOn mark visits title keywords references content topic')
-     .exec(function(err, doc){
+contentObj.getArticleDetail = function(id, cb) {
+    model.ArticleModel.findOne({id: id})
+    .select('id author modifyOn mark visits title keywords references content topic')
+    .exec(function(err, doc){
         if (!err && doc) {
             model.CommentModel.findOne({id:id}, function(err, cdoc) {
                 if (!err && cdoc) {

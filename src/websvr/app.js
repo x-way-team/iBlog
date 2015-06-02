@@ -31,7 +31,7 @@ cache.init(function(err){
 var routes = require('./routes/index');
 var apiUsers = require('./routes/users');
 var apiSessions = require('./routes/sessions');
-var apicontents = require('./routes/contents');
+var apiContents = require('./routes/contents');
 
 var app = express();
 
@@ -50,10 +50,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//url映射
 app.use('/', routes);
 app.use('/api/users', apiUsers);
 app.use('/api/session', apiSessions);
+app.use('/api/contents', apiContents);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

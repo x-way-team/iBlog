@@ -40,33 +40,11 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-               <td>aaa</td>
-               <td>上线</td>
-               <td>54</td>
+            <tr ng-repeat="article in articles">
+               <td>{{article.title}}</td>
+               <td>{{article.status}}</td>
+               <td>{{article.visits}}</td>
                <td>10</td> 
-               <td>
-                 <a href="/article-editor">编辑</a> | 
-                 <a href="#">置顶</a> | 
-                 <a href="#">删除</a> 
-               </td>
-            </tr>
-            <tr>
-               <td>宝宝版</td>
-               <td>上线</td>
-               <td>6</td>
-               <td>1</td> 
-               <td>
-                 <a href="/article-editor">编辑</a> | 
-                 <a href="/article-editor">置顶</a> | 
-                 <a href="/article-editor">删除</a> 
-               </td>
-            </tr>
-            <tr>
-               <td>啦啦啦</td>
-               <td>上线</td>
-               <td>66</td>
-               <td>19</td> 
                <td>
                  <a href="/article-editor">编辑</a> | 
                  <a href="/article-editor">置顶</a> | 

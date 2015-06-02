@@ -12,8 +12,8 @@
     "db": {
         "url": "mongodb://localhost/iblogdb",
         "options":{
-            // "user": "admin",
-            // "pass": "sonix123",
+            "user": "root",
+            "pass": "borlandc"
             // "auth": { 
             //     "authdb": "admin" 
             // }

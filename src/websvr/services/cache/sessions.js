@@ -106,14 +106,14 @@ exports.getSessionObject = function(token, cb) {
         }
     });
 };
-
+//从缓存redis中获取value
 exports.getSessionAttrs = function(token, arr, cb) {
     client.hmget(token, arr, function(err, reply) {
         if (err) {
             cb(err, null);
         } else {
             var attrObj = {};
-            var count = arr.length();
+            var count = arr.length;
             for (var i = 0; i < count; ++i) {
                 attrObj[arr[i]] = reply[i];
             }

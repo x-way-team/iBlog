@@ -32,3 +32,30 @@ exports.creatAticle = function(token, data, cb) {
     });
 };
 
+//load当前用户文章列表
+exports.loadAticles = function(token,cb) {
+
+    sessions.getSessionAttrs(token, ['uid'], function (err, dataObj) {
+        if (err) {
+            result.resultCode = 'F';
+            result.errorCode ='1112';
+            result.message = err.message;
+            cb(result);
+            return;
+        }
+        contents.getArticles(dataObj.uid,function (err, docs) {
+            var result = {};
+            if (!err) {
+                result.resultCode = 'S';
+                result.content = {
+                    articles: docs
+                };
+            } else {
+                result.resultCode = 'F';
+                result.errorCode ='1112';
+                result.message = err.message;
+            }
+            cb(result);
+        });
+    });
+};

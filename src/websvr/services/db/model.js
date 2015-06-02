@@ -11,6 +11,10 @@ var model = exports = module.exports = {};
 //email要通过邮件确认
 //phone number要通过手机短信确认
 //用户的社区属性主要用于激励用户积极使用社区，提升社区活跃程度
+var UserRoleSchema = new Schema({
+    type: {type: String, enum: ['user', 'orgMember', 'orgOwner', 'admin'], default: 'user'}
+});
+
 var UserSchema = new Schema({
     // 基本信息
     uid: {type: String, unique: true, required: true},
@@ -20,6 +24,8 @@ var UserSchema = new Schema({
     email: {type: String, unique: true},
     phone: {type: String, unique: true},
     createOn: {type:Date, default: Date.now},
+
+    role: [UserRoleSchema],
     locked: Boolean, //管理员锁定账号
     // 用户的社区属性
     level: Number,  //等级，通过经验值计算得到    
@@ -75,6 +81,7 @@ var CommentSchema = new Schema({
     author: String,         //作者的userid
     content: String,        //评论内容，markdown格式
     createOn: {type:Date, default: Date.now},       //创建日期
+    follow: String,         //上一个comment id
     modifyOn: Date,         //最后修改日期
     locked: Boolean,        //管理员禁用评论
 });
