@@ -19,6 +19,7 @@ myApp.config([
         $routeProvider.when('/signup', { templateUrl: ('partial/signup'), controller: 'SignUpCtrl', permission: 'none' });
         $routeProvider.when('/aboutUs', { templateUrl: ('partial/aboutUs'), controller: 'HomeCtrl' });
         $routeProvider.when('/myblog', { templateUrl: ('partial/myblog'), controller: 'MyblogCtrl' });
+        $routeProvider.when('/subjectManagement', { templateUrl: ('partial/subjectManagement'), controller: 'SubjectManageCtrl' });
         $routeProvider.when('/topics', { redirectTo: '/topics/main'});//l路径重定向
         $routeProvider.when('/topics/:urlparam', { templateUrl:'partial/topics', controller: 'TopicsCtrl', permission: 'user' });
         $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl', permission: 'user' });

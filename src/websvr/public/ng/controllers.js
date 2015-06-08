@@ -211,7 +211,19 @@ controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageServi
             client:false,
             myblog:true
         };
-        $scope.articles = data.content.articles;
+        $scope.articles = data.content.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+        $scope.articles.length=data.content.articles.length;
+    }, function(msg){//失败
+        alert(msg);
+    }); 
+}]);
+
+
+controllers.controller('SubjectManageCtrl', ['$scope','$rootScope', 'SubjectManageService', function ($scope, $rootScope,SubjectManageService) {
+
+    //初始化加载文件列表
+    SubjectManageService.getSubjects($rootScope.token, function(data){
+        $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
     }, function(msg){//失败
         alert(msg);
     }); 

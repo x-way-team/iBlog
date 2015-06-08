@@ -8,7 +8,7 @@ var contents = require("../services/db").Contents;
 var sessions = require('../services/cache').Sessions;
 var uuid = require('uuid');
 //创建新文章
-exports.creatAticle = function(token, data, cb) {
+exports.creatArticle = function(token, data, cb) {
     sessions.getSessionAttrs(token, ['uid'], function (err, dataObj) {
         if (err) {
             result.resultCode = 'F';

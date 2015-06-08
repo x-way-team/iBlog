@@ -31,7 +31,8 @@ cache.init(function(err){
 var routes = require('./routes/index');
 var apiUsers = require('./routes/users');
 var apiSessions = require('./routes/sessions');
-var apiContents = require('./routes/contents');
+var apiArticles = require('./routes/articles');
+var apiSubjects = require('./routes/subjects');
 
 var app = express();
 
@@ -54,7 +55,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/api/users', apiUsers);
 app.use('/api/session', apiSessions);
-app.use('/api/contents', apiContents);
+app.use('/api/articles', apiArticles);
+app.use('/api/subjects', apiSubjects);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -228,7 +228,7 @@ services.factory('ArticleManageService',['ApiService',function (ApiService) {
             },
             data: articleObj
         };
-        ApiService.post('/api/contents', obj, successcb, failcb);
+        ApiService.post('/api/articles', obj, successcb, failcb);
     };
     articleData.loadArticles = function (token, successcb, failcb) {
         var obj = {
@@ -236,9 +236,54 @@ services.factory('ArticleManageService',['ApiService',function (ApiService) {
                 token: token
             }
         };
-        ApiService.get('/api/contents', obj, successcb, failcb);
+        ApiService.get('/api/articles', obj, successcb, failcb);
     };
     return articleData;
 }]);
 
+
+//注册新的服务
+services.factory('SubjectManageService',['ApiService',function (ApiService) {
+    var subjectData = {};
+    subjectData.createSubject = function (token, subjectObj, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            },
+            data: subjectObj
+        };
+        ApiService.post('/api/subjects', obj, successcb, failcb);
+    };
+    subjectData.getSubjects = function (token, successcb, failcb) {
+        // var obj = {
+        //     params: {
+        //         token: token
+        //     }
+        // };
+        // ApiService.get('/api/subjects', obj, successcb, failcb);
+        successcb({resultCode:'S', content:{subjects:[
+            {id:'111111', name:'111111'},
+            {id:'222222', name:'222222'},
+            {id:'333333', name:'333333'}
+        ]}});
+    };
+    subjectData.getSubject = function (token, subjectId, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            }
+        };
+        ApiService.get('/api/subjects/' + subjectId, obj, successcb, failcb);
+    };
+    subjectData.updateSubject = function (token, subjectId, subjectObj, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            },
+            data:subjectObj
+        };
+        ApiService.get('/api/subjects/' + subjectId, obj, successcb, failcb);
+    };
+    return subjectData;
+}]);
 
