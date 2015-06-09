@@ -219,12 +219,34 @@ controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageServi
 }]);
 
 
-controllers.controller('SubjectManageCtrl', ['$scope','$rootScope', 'SubjectManageService', function ($scope, $rootScope,SubjectManageService) {
-
+controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManageService', function ($scope, $rootScope,SubjectManageService) {
+    $scope.previousSub = null;
+    $scope.tempSub = {}; //用于编辑时的临时变量，对应当前编辑的subject
     //初始化加载文件列表
     SubjectManageService.getSubjects($rootScope.token, function(data){
         $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
     }, function(msg){//失败
         alert(msg);
     }); 
+
+    $scope.editSubjectName = function(subject) {//传递对象不是值传递，而是传递引用。javascipt中所有的参数传递都是值传递，传递对象也是值传递：指向地址的引用
+        //先将之前的Subject Edit状态disable
+        if($scope.previousSub) {
+            $scope.previousSub.editEn=false;
+        }
+        //再将当前subject edit启用
+        subject.editEn=true;
+        //替换上一次的Subject
+        $scope.previousSub = subject;
+        $scope.tempSub.name = subject.name;
+    }
+
+    $scope.saveEdit = function(subject) {
+        subject.name = $scope.tempSub.name;
+        subject.editEn = false;
+    };
+
+    $scope.cancelEdit = function(subject) {
+        subject.editEn = false;
+    }
 }]);
