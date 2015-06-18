@@ -54,8 +54,8 @@
         </tbody>
      </table>
      <div style="margin-top:20px;">
-      <input id="txtCat" type="text" class="t_input" size="50" maxlength="30">
-      <input id="btnAdd" type="button" class="t_btn" value="添加分类">
+      <input id="txtCat" type="text" class="t_input" size="50" maxlength="30" ng-model="newSub.name">
+      <input id="btnAdd" type="button" class="t_btn" value="添加分类" ng-click="creatSubject()">
       <input id="btnCancel" type="button" class="t_btn" value="取消修改" style="display:none;">
      </div>
   </div>

@@ -220,16 +220,45 @@ controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageServi
 
 
 controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManageService', function ($scope, $rootScope,SubjectManageService) {
+   //点击Header部分Logo返回HomePage
+    if($rootScope.user.userName!=''){//登录或是注册成功
+         $rootScope.show = {
+            login: false,
+            share: true,
+            email: true,
+            signup: false,
+            search: true,
+            logout:true,
+            userName:true,
+            client:false,
+            myblog:true
+           };
+    }else{
+        $rootScope.show = {//未登录或注册
+            userName:true,
+            login: true,
+            share: true,
+            email: true,
+            signup: true,
+            search: true,
+            logout:false,
+            client:true,
+            myblog:false
+        };
+    }
+    //先定义
     $scope.previousSub = null;
     $scope.tempSub = {}; //用于编辑时的临时变量，对应当前编辑的subject
+    $scope.newSub = {};
     //初始化加载文件列表
+    //调用接口
     SubjectManageService.getSubjects($rootScope.token, function(data){
         $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
     }, function(msg){//失败
         alert(msg);
     }); 
 
-    $scope.editSubjectName = function(subject) {//传递对象不是值传递，而是传递引用。javascipt中所有的参数传递都是值传递，传递对象也是值传递：指向地址的引用
+    $scope.editSubjectName = function(subject) {//传递对象不是值传递，而是传递引用。javascipt中所有的参数传递都是值传递，传递对象也是值传递：传递指向地址的引用
         //先将之前的Subject Edit状态disable
         if($scope.previousSub) {
             $scope.previousSub.editEn=false;
@@ -248,5 +277,16 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
 
     $scope.cancelEdit = function(subject) {
         subject.editEn = false;
+    }
+    //增加类别subject
+    $scope.creatSubject = function() {
+    var newSubject = {
+        name:$scope.newSub.name
+    };
+    SubjectManageService.createSubject($rootScope.token,newSubject, function(data){
+    $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败
+        alert(msg);
+    }); 
     }
 }]);

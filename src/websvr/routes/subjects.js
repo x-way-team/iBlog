@@ -1,7 +1,7 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-var contents = require('../controllers/contents.js');
+var subjects = require('../controllers/subjects.js');
 
 
 
@@ -10,7 +10,10 @@ router.post('/', function(req, res){
     //todo: verify title
     var token = req.body.params.token;
     var data = req.body.data;//subject
-    //todo
+    subjects.createSubject(token,data, function(result) {
+    res.json(result);
+    });
+
 });
 
 /*get subject list*/
@@ -18,7 +21,7 @@ router.get('/', function(req, res){
     //todo: verify title
     var token = req.query.token;
     // var data = req.body.data;//user
-    contents.loadAticles(token, function(result) {
+    subjects.loadSubjects(token, function(result) {
         res.json(result);
     });
 });
