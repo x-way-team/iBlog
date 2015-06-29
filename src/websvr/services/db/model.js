@@ -97,7 +97,7 @@ var CommentsSchema = new Schema({
 var SubjectSchema = new Schema({
     id: {type: String, unique: true, required: true},
     creator: String, //uid
-    name: String,
+    name: {type:String,unique: true},
     description: String, //说明
     articles: [String], //article id array
     subjects: [String], //subjects id array,子文件夹

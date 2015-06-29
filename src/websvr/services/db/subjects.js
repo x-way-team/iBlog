@@ -29,8 +29,8 @@ subjectObj.createSubject = function(uid, data, cb) {
     });
 };
 //更新类别
-subjectObj.updateArticle = function(id, subjectObj, cb) {
-    model.SubjdectModel.findOne({
+subjectObj.updateSubject = function(id, subjectObj, cb) {
+    model.SubjectModel.findOne({
         id:id
     }, function(err, doc){
         if (!err && doc) {
@@ -49,8 +49,8 @@ subjectObj.updateArticle = function(id, subjectObj, cb) {
 
 //得到当前用户文章列表
 subjectObj.getSubjects = function(userId, cb) {
-    model.SubjdectModel.find({author: userId})
-    .select('id title status visits')
+    model.SubjectModel.find({author: userId})
+    .select('name articles')
     .exec(function(err, docs){
         if (!err && docs) {
             cb(null, docs);

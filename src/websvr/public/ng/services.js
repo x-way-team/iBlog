@@ -255,17 +255,17 @@ services.factory('SubjectManageService',['ApiService',function (ApiService) {
         ApiService.post('/api/subjects', obj, successcb, failcb);
     };
     subjectData.getSubjects = function (token, successcb, failcb) {
-        // var obj = {
-        //     params: {
-        //         token: token
-        //     }
-        // };
-        // ApiService.get('/api/subjects', obj, successcb, failcb);
-        successcb({resultCode:'S', content:{subjects:[
-            {id:'111111', name:'111111'},
-            {id:'222222', name:'222222'},
-            {id:'333333', name:'333333'}
-        ]}});
+        var obj = {
+            params: {
+                token: token
+            }
+        };
+        ApiService.get('/api/subjects', obj, successcb, failcb);
+        // successcb({resultCode:'S', content:{subjects:[
+        //     {id:'111111', name:'111111'},
+        //     {id:'222222', name:'222222'},
+        //     {id:'333333', name:'333333'}
+        // ]}});
     };
     subjectData.getSubject = function (token, subjectId, successcb, failcb) {
         var obj = {

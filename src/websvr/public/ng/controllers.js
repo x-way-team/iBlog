@@ -280,13 +280,23 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
     }
     //增加类别subject
     $scope.creatSubject = function() {
+     if($scope.newSub.name!=null){ 
     var newSubject = {
         name:$scope.newSub.name
     };
     SubjectManageService.createSubject($rootScope.token,newSubject, function(data){
     $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
-    }, function(msg){//失败
+       alert("新增的类别成功！");
+     //重新加载类别列表
+       SubjectManageService.getSubjects($rootScope.token, function(data){
+        $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//加载类别列表失败
+        alert(msg);
+    });
+       
+    }, function(msg){//新增类别失败
         alert(msg);
     }); 
+    }else{alert("请输入新增的类别名称！");}
     }
 }]);
