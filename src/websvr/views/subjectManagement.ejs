@@ -34,7 +34,7 @@
                 <a name="saveEdit" ng-if="subject.editEn" ng-click="saveEdit(subject)">保存</a>
                 <a name="cancelEdit" ng-if="subject.editEn" ng-click="cancelEdit(subject)">取消</a>
               </td>
-              <td>4</td>
+              <td>{{subject.articles.length}}</td>
               <td>
                  <a name="edit" ng-click="editSubjectName(subject)">编辑</a><!--此处启用编辑,ng-click用于判断该标签是否被点击-->
                  <a href="" name="del" onclick="">删除</a>

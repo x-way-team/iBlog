@@ -13,7 +13,7 @@ subjectObj.init = function (ap) {
 subjectObj.createSubject = function(uid, data, cb) {
     var newSubject = {
         id: uuid.v4(),
-        author: uid
+        creator: uid
     };
     for (var key in data) {
         newSubject[key] = data[key];
@@ -49,7 +49,7 @@ subjectObj.updateSubject = function(id, subjectObj, cb) {
 
 //得到当前用户文章列表
 subjectObj.getSubjects = function(userId, cb) {
-    model.SubjectModel.find({author: userId})
+    model.SubjectModel.find({creator: userId})
     .select('name articles')
     .exec(function(err, docs){
         if (!err && docs) {

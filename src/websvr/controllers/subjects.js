@@ -48,7 +48,7 @@ exports.loadSubjects = function(token,cb) {
             if (!err) {
                 result.resultCode = 'S';
                 result.content = {
-                    articles: docs
+                    subjects: docs
                 };
             } else {
                 result.resultCode = 'F';
