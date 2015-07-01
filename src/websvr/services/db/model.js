@@ -96,7 +96,7 @@ var CommentsSchema = new Schema({
 //专题模型，是文章的容器
 var SubjectSchema = new Schema({
     id: {type: String, unique: true, required: true},
-    creator: String, //uid
+    creator: {type: String, required: true}, //uid
     name: {type:String,unique: true},
     description: String, //说明
     articles: [String], //article id array

@@ -273,6 +273,21 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
     $scope.saveEdit = function(subject) {
         subject.name = $scope.tempSub.name;
         subject.editEn = false;
+        //重新定义对象，前后台传输
+        var newObj={name:subject.name};
+        SubjectManageService.updateSubject($rootScope.token, subject.id, newObj, function(data){
+        $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+       alert("新增的类别成功！");
+       //重新加载类别列表
+       SubjectManageService.getSubjects($rootScope.token, function(data){
+        $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//加载类别列表失败
+        alert(msg);
+    });
+       
+    }, function(msg){//新增类别失败
+        alert(msg);
+    });
     };
 
     $scope.cancelEdit = function(subject) {

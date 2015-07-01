@@ -25,5 +25,14 @@ router.get('/', function(req, res){
         res.json(result);
     });
 });
+/* update subject info */
+router.put('/:subjectID', function(req, res){
+    var token = req.body.params.token;
+    var objId=req.params.subjectID;
+    var updateObj = req.body.data;
+    subjects.updateSubject(token, objId,updateObj, function(result){
+        res.json(result);
+    });    
+});
 
 module.exports = router;

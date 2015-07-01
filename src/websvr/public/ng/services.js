@@ -28,6 +28,9 @@ services.factory('ErrCodeLangService', function () {
         "1110": { "zh-cn": "您有内容无权访问，可能是因为与服务器连接已经断开，请重新登录" },
         "1111": { "zh-cn": "此session已经过期" },
         "1112": { "zh-cn": "创建该文章失败" },
+        "1113": { "zh-cn": "创建用户文章新类别失败" },
+        "1114": { "zh-cn": "加载用户所有文章类别失败" },
+        "1115": { "zh-cn": "更新当前文章类别失败" },
         "2001": { "zh-cn": "无法连接服务器，请稍后重试" }
 
     };
@@ -275,14 +278,14 @@ services.factory('SubjectManageService',['ApiService',function (ApiService) {
         };
         ApiService.get('/api/subjects/' + subjectId, obj, successcb, failcb);
     };
-    subjectData.updateSubject = function (token, subjectId, subjectObj, successcb, failcb) {
+    subjectData.updateSubject = function (token, subjectId, newObj, successcb, failcb) {
         var obj = {
             params: {
                 token: token
             },
-            data:subjectObj
+            data:newObj
         };
-        ApiService.get('/api/subjects/' + subjectId, obj, successcb, failcb);
+        ApiService.put('/api/subjects/'+subjectId,obj, successcb, failcb);
     };
     return subjectData;
 }]);

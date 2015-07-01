@@ -23,21 +23,20 @@ subjectObj.createSubject = function(uid, data, cb) {
         if (!err) {//save成功
             cb(null, newDoc.id);
         } else {//save失败
-        	console.log(err, newDoc.id);
-            cb(new Error("internal error, failed to save this subject:"+ title +","+ newDoc.id), null);
+            cb(err, null);
         }
     });
 };
 //更新类别
-subjectObj.updateSubject = function(id, subjectObj, cb) {
+subjectObj.updateSubject = function(subjectID,subjectObj, cb) {
     model.SubjectModel.findOne({
-        id:id
+        id:subjectID
     }, function(err, doc){
         if (!err && doc) {
-            for (var key in subjectObj) {
-                doc[key] = subjectObj[key];
+            // for (var key in subjectObj) {
+                doc.name= subjectObj.name;
                 doc.modifyOn = Date.now();
-            }
+            // }
             doc.save(function(err, data){
                 cb(err, data);
             });
@@ -50,7 +49,7 @@ subjectObj.updateSubject = function(id, subjectObj, cb) {
 //得到当前用户文章列表
 subjectObj.getSubjects = function(userId, cb) {
     model.SubjectModel.find({creator: userId})
-    .select('name articles')
+    .select('id name articles')
     .exec(function(err, docs){
         if (!err && docs) {
             cb(null, docs);
