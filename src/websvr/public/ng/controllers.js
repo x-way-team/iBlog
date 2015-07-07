@@ -162,7 +162,7 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
     //发表文章并跳转至文章列表
     $scope.publishArticle = function() {
         ArticleManageService.saveArticle($rootScope.token,$scope.article, function(data){
-            alert('文章保存成功！');
+            alert('文章发表成功！');
             $location.path('/myblog');//文章保存成功则跳转到myblog页面
             
         }, function(msg){

@@ -17,7 +17,7 @@ exports.createSubject = function(token, data, cb) {
             cb(result);
             return;
         }
-        subjects.createSubject(dataObj.uid,data,function (err, docs) {
+        subjects.createSubject(dataObj.uid, data, function (err, docs) {
             var result = {};
             if (!err) {
                 result.resultCode = 'S';
@@ -33,7 +33,7 @@ exports.createSubject = function(token, data, cb) {
 };
 
 //load当前用户类别列表
-exports.loadSubjects = function(token,cb) {
+exports.loadSubjects = function(token, cb) {
 
     sessions.getSessionAttrs(token, ['uid'], function (err, dataObj) {
         if (err) {
@@ -43,7 +43,7 @@ exports.loadSubjects = function(token,cb) {
             cb(result);
             return;
         }
-        subjects.getSubjects(dataObj.uid,function (err, docs) {
+        subjects.getSubjects(dataObj.uid, function (err, docs) {
             var result = {};
             if (!err) {
                 result.resultCode = 'S';
@@ -61,15 +61,12 @@ exports.loadSubjects = function(token,cb) {
 };
 //更新类别
 exports.updateSubject = function(token,subjectID,subjectObj,cb) {
-
         subjects.updateSubject(subjectID,subjectObj, function(err, doc) {
         var result = {};
-        if (!err) {
-            sessions.updateSession(doc, function(err, data){             
-                result.resultCode = 'S';
-                result.content = data;
-                cb(result);
-            });
+        if (!err) {             
+            result.resultCode = 'S';
+            result.content = doc;
+            cb(result);
         } else {
             result.resultCode = 'F';
             result.errorCode ='1115';
