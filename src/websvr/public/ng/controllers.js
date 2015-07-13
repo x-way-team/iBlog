@@ -277,7 +277,7 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
         var newObj={name:subject.name};
         SubjectManageService.updateSubject($rootScope.token, subject.id, newObj, function(data){
         $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
-       alert("新增的类别成功！");
+       alert("修改类别成功！");
        //重新加载类别列表
        SubjectManageService.getSubjects($rootScope.token, function(data){
         $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
