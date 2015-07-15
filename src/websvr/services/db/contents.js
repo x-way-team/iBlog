@@ -160,3 +160,41 @@ contentObj.getArticlesByTopic = function(topicName, cb) {
         }
     });
 };
+
+
+//搜索文章
+contentObj.queryArticles = function(attrsObj, textArr, offset, limit, cb) {
+    //构造查询条件
+    var queryObj = {};
+    for (var attr in attrsObj) {
+        queryObj[attr] = attrsObj[attr];
+    }
+    var count = textArr.length;
+    if (count !== 0) {
+        queryObj['$and'] = [];
+        for (var i = 0; i < count; ++i) {
+            var queryElem = {'$or': []};
+            queryElem['$or'].push({title: new RegExp(textArr[i], 'i')});            
+            queryElem['$or'].push({content: new RegExp(textArr[i], 'i')});
+            queryObj['$and'].push(queryElem);
+        }
+    }
+    //开始查询
+    var query = model.ArticleModel.find(queryObj);
+    var total = query.count();
+    query.skip(offset)
+    .limit(limit)
+    .select('id author title modifyOn')
+    .exec(function (err, articles){
+        if (!err){
+            cb(null, {
+                total:total, 
+                offset:offset, 
+                count:articles.length, 
+                articles:articles
+            }); 
+        } else {
+            cb(err, null);
+        }
+    });
+};

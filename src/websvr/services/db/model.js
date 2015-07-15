@@ -61,7 +61,7 @@ var ArticleSchema = new Schema({
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
     content: String,        //实际内容，markdown格式
     //附加元素
-    topic: String,          //用于首页的分类，topic id
+    topic: String,          //用于首页的主题分类，topic id
     forks: [String],        //从若干篇文章的副本组合而成，
                             //文章可能是本站的文章Id，也可能是其他网站文章的Url
 });
@@ -91,6 +91,14 @@ var CommentsSchema = new Schema({
     id: {type: String, unique: true, required: true},
     commentTo: String,        //评论文章的id
     comments: [CommentSchema],//所有的评论
+    enabled: Boolean,         //用于关闭评论
+});
+
+//专题下文章的简介列表
+var SubjectArticleSchema = new Schema({
+    id: String,        //对应article的id
+    title: String,     //对应article的title
+    modifyOn: String,  //对应article的modifyOn
 });
 
 //专题模型，是文章的容器
@@ -99,7 +107,7 @@ var SubjectSchema = new Schema({
     creator: {type: String, required: true}, //uid
     name: {type:String,unique: true},
     description: String, //说明
-    articles: [String], //article id array
+    articles: [SubjectArticleSchema], //article array
     subjects: [String], //subjects id array,子文件夹
     createOn: {type:Date, default: Date.now},
     modifyOn: Date

@@ -46,7 +46,7 @@ subjectObj.updateSubject = function(subjectID,subjectObj, cb) {
     });
 };
 
-//得到当前用户文章列表
+//得到当前用户专题列表
 subjectObj.getSubjects = function(userId, cb) {
     model.SubjectModel.find({creator: userId})
     .select('id name articles')
