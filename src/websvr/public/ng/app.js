@@ -22,6 +22,7 @@ myApp.config([
         $routeProvider.when('/subjectManagement', { templateUrl: ('partial/subjectManagement'), controller: 'SubjectManageCtrl' });
         $routeProvider.when('/topics', { redirectTo: '/topics/main'});//l路径重定向
         $routeProvider.when('/topics/:urlparam', { templateUrl:'partial/topics', controller: 'TopicsCtrl', permission: 'user' });
+        $routeProvider.when('/query-article', { templateUrl: ('partial/query-article'), controller: 'QueryAtiCtrl', permission: 'none' });
         $routeProvider.when('/article-editor', { templateUrl: ('partial/article-editor'), controller: 'ArticleEditCtrl', permission: 'user' });
         $routeProvider.otherwise({ redirectTo: '/404' });
         $locationProvider.html5Mode(true);

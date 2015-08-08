@@ -289,4 +289,28 @@ services.factory('SubjectManageService',['ApiService',function (ApiService) {
     };
     return subjectData;
 }]);
+//全局文章搜索
+services.factory('QueryArticleService',['ApiService',function (ApiService) {
+    var queryData = {};
+    queryData.getAritcleAll = function (token, keyWords, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token,
+                keyWords: keyWords
+            }
+        };
+        ApiService.get('/api/query-article', obj, successcb, failcb);
+    };
+    queryData.getAritcleSpec = function (token, topic,queryObj,successcb, failcb) {
+        var obj = {
+            params: {
+                token: token,
+                data: queryObj
+            }
+            
+        };
+        ApiService.get('/api/query-article/'+topic, obj, successcb, failcb);
+    };
+    return queryData;
+}]);
 
