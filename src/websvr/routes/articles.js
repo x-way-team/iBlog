@@ -23,4 +23,11 @@ router.get('/', function(req, res){
     });
 });
 
+//get指定文章
+router.get('/:articleId', function(req, res){
+    var articleId = req.params.articleId;
+    contents.getAticle(token, articleId, function(result) {
+        res.json(result);
+    });
+});
 module.exports = router;

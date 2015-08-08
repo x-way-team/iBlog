@@ -149,10 +149,29 @@ controllers.controller('SignUpCtrl', ['$rootScope', '$scope', '$location', 'User
     };
 }]);
 
-controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageService','$location',function ($rootScope,$scope,ArticleManageService,$location) {
-        //文章保存
-     $scope.saveArticle = function() {
-        ArticleManageService.saveArticle($rootScope.token,$scope.article, function(data){
+controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageService','$location', 'TopicService', function ($rootScope,$scope,ArticleManageService,$location, TopicService) {
+    //文章保存
+    $scope.topics = [];
+    $scope.articleEditData = {};
+    TopicService.getTopics($rootScope.token, function(data) {
+        scope.topics = data.topics;
+    }, function(msg) {
+        alert(msg);
+    });
+    var params = $location.search();
+    if (params.articleId) {
+        ArticleManageService.getArticle($rootScope.token, params.articleId, function(data) {
+            $scope.articleEditData.title = data.title;
+            $scope.articleEditData.keys = data.keys;
+            $scope.articleEditData.content = data.content;
+            $scope.articleEditData.topic = data.topic;
+        }, function(msg){
+            alert(msg);
+        });
+    }
+
+    $scope.saveArticle = function() {
+        ArticleManageService.saveArticle($rootScope.token,$scope.articleEditData, function(data){
             alert('文章保存成功！');
         }, function(msg){
             alert(msg);
@@ -161,7 +180,7 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
     
     //发表文章并跳转至文章列表
     $scope.publishArticle = function() {
-        ArticleManageService.saveArticle($rootScope.token,$scope.article, function(data){
+        ArticleManageService.saveArticle($rootScope.token,$scope.articleEditData, function(data){
             alert('文章发表成功！');
             $location.path('/myblog');//文章保存成功则跳转到myblog页面
             
@@ -169,7 +188,9 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
             alert(msg);
         });
     };
+
 }]);
+
 controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageService', function ($scope, $rootScope,ArticleManageService) {
 //点击Header部分Logo返回HomePage
     if($rootScope.user.userName!=''){//登录或是注册成功

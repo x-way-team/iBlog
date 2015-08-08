@@ -3,30 +3,36 @@
         <form>
             <div class="form-group">
                 <label for="editTitle">主题</label>
-                <input type="text" class="form-control" id="editTitle" placeholder="我的标题" ng-model="article.title"> 
+                <input type="text" class="form-control" id="editTitle" placeholder="我的标题" ng-model="articleEditData.title"> 
             </div>
             <div class="form-group">
                 <label for="editKeys">关键字</label>
-                <input type="text" class="form-control" id="editKeys" placeholder="我的关键字，逗号或分号隔开" ng-model="article.keys"> 
+                <input type="text" class="form-control" id="editKeys" placeholder="我的关键字，逗号或分号隔开" ng-model="articleEditData.keys"> 
             </div>
             <div class="form-group">
                 <label for="editContent">内容</label>
-                <textarea class="form-control" id="editContent" placeholder="我的内容" ng-model="article.content"/>
+                <textarea class="form-control" id="editContent" placeholder="我的内容" ng-model="articleEditData.content"/>
+            </div>
+            <div class="form-group">
+                <label for="selectTopic">主题</label>
+                <select class="form-control" id="selectTopic">
+                    <option ng-repeat="topic in topics">{{topic.name}}</option>
+                </select>
             </div>
         </form>
     </div>
     <div class="col-md-6">
         <article>
             <header>
-                <h1>{{article.title}}</h1>
+                <h1>{{articleEditData.title}}</h1>
                 <hr>
             </header>
             <details>
                 <summary>关键字</summary>
-                <span class="badge">{{article.keys}}</span>
+                <span class="badge">{{articleEditData.keys}}</span>
                 <hr>
             </details>
-            <section btf-markdown="article.content">
+            <section btf-markdown="articleEditData.content">
             </section>
         </article>
     </div>

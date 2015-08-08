@@ -59,3 +59,18 @@ exports.loadAticles = function(token,cb) {
         });
     });
 };
+
+exports.getArticle = function (token, articleId, cb) {
+    contents.getArticleDetail(articleId, function (err, doc) {
+        var result = {};
+        if (!err) {
+            result.resultCode = 'S';
+            result.content = doc;
+        } else {
+            result.resultCode = 'F';
+            result.errorCode ='1116';
+            result.message = err.message;
+        }
+        cb(result);
+    });
+};

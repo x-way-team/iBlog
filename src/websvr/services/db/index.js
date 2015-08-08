@@ -7,16 +7,16 @@
 var users = require("./users.js");
 var contents = require("./contents.js");
 var orgs = require("./orgs.js");
-var subjects=require("./subjects.js");
-
+var subjects = require("./subjects.js");
+var topics = require("./topics.js");
 var mongoose = require('mongoose');
 
 var app = exports = module.exports = {
 	Users: users,
 	Contents: contents,
 	Orgs: orgs,
-	Subjects:subjects,
-
+	Subjects: subjects,
+	Topics: topics,
 	config_data: {url:null},
 	error_cb: null,
 	state: "uninit",
@@ -51,6 +51,7 @@ app.start = function() {
 	    	app.Users.init(app);
 	    	app.Contents.init(app);
 	    	app.Orgs.init(app);
+	    	app.Topics.init(app);
 	    	app.state = "init";
 	    }
 	});

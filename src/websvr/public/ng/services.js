@@ -30,7 +30,10 @@ services.factory('ErrCodeLangService', function () {
         "1112": { "zh-cn": "创建该文章失败" },
         "1113": { "zh-cn": "创建用户文章新类别失败" },
         "1114": { "zh-cn": "加载用户所有文章类别失败" },
-        "1115": { "zh-cn": "更新当前文章类别失败" },
+        "1115": { "zh-cn": "更新当前文章类别失败" },        
+        "1116": { "zh-cn": "获取文章细节失败" },
+        "1120": { "zh-cn": "新增主题失败"},
+        "1121": { "zh-cn": "获取主题列表失败"},
         "2001": { "zh-cn": "无法连接服务器，请稍后重试" }
 
     };
@@ -241,6 +244,14 @@ services.factory('ArticleManageService',['ApiService',function (ApiService) {
         };
         ApiService.get('/api/articles', obj, successcb, failcb);
     };
+    articleData.getArticle = function (token, id, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            }
+        };
+        ApiService.get('/api/articles/'+id, obj, successcb, failcb);
+    };
     return articleData;
 }]);
 
@@ -314,3 +325,26 @@ services.factory('QueryArticleService',['ApiService',function (ApiService) {
     return queryData;
 }]);
 
+
+//注册新的服务
+services.factory('TopicService',['ApiService',function (ApiService) {
+    var topicData = {};
+    topicData.create = function (token, topicObj, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            },
+            data: topicObj
+        };
+        ApiService.post('/api/topics', obj, successcb, failcb);
+    };
+    topicData.getTopics = function (token, successcb, failcb) {
+        var obj = {
+            params: {
+                token: token
+            }
+        };
+        ApiService.get('/api/topics', obj, successcb, failcb);
+    };
+    return topicData;
+}]);
