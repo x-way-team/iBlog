@@ -33,6 +33,7 @@ var apiUsers = require('./routes/users');
 var apiSessions = require('./routes/sessions');
 var apiArticles = require('./routes/articles');
 var apiSubjects = require('./routes/subjects');
+var apiQueryAri = require('./routes/queryArticle');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/api/users', apiUsers);
 app.use('/api/session', apiSessions);
 app.use('/api/articles', apiArticles);
 app.use('/api/subjects', apiSubjects);
+app.use('/api/query-article', apiQueryAri);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

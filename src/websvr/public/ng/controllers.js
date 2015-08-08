@@ -299,9 +299,11 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
     var newSubject = {
         name:$scope.newSub.name
     };
+    $scope.newSub.name=null;//清空input
     SubjectManageService.createSubject($rootScope.token,newSubject, function(data){
     $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
        alert("新增的类别成功！");
+
      //重新加载类别列表
        SubjectManageService.getSubjects($rootScope.token, function(data){
         $scope.subjects = data.content.subjects;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
@@ -314,4 +316,48 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
     }); 
     }else{alert("请输入新增的类别名称！");}
     }
+}]);
+
+controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'QueryArticleService', function ($rootScope, $scope, $location, QueryArticleService) {
+    
+    if($rootScope.user.userName!=''){//登录或是注册成功
+        $rootScope.show = {
+            login: false,
+            share: true,
+            email: true,
+            signup: false,
+            search: false,
+            logout:true,
+            userName:true,
+            client:false,
+            myblog:true
+        };
+    }else{
+        $rootScope.show = {//未登录或注册
+            userName:false,
+            login: true,
+            share: true,
+            email: true,
+            signup: true,
+            search: false,
+            logout:false,
+            client:true,
+            myblog:false
+        };
+    }
+    $scope.queryActicleData = {//QueryActicleCtrl的私有数据
+        keyWords : null
+    };
+    $scope.queryArtilce = function () {
+        if($scope.queryActicleData.keyWords != null) { //输入查询关键字
+            //全局搜索文章
+            QueryArticleService.getAritcleAll($rootScope.token, $scope. queryActicleData.keyWords, function(data) {
+                $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+            }, function(msg){
+                alert(msg);
+            }); 
+        } else {
+            alert("文章查询失败！");
+        }
+    };
 }]);
