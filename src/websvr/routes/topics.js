@@ -5,7 +5,7 @@ var topics = require('../controllers/topics.js');
 
 /* create new topic */
 router.post('/', function(req, res) {
-    var data = req.body.data;//subject
+    var data = req.body.data;//topic
     topics.create(data.name, data.description, function(result) {
     	res.json(result);
     });
@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
 
 /* get topics */
 router.get('/', function(req, res) {
-    var data = req.body.data;//subject
+    var data = req.body.data;//topic
     topics.getList(function(result) {
     	res.json(result);
     });

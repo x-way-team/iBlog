@@ -1,28 +1,36 @@
 
 <div class="row">
-<div class="col-xs-3">
-  <div class="media">
-    <a class="media-left media-middle" >
-      <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image"/>
-    </a>
-    <div class="media-body">
-     <div class="row"><a class="navbar-brand" href="/topics/news">NEWS</a></div>
-     <div class="row"><h5 class="media-heading">Beijing Subway Fare Hikes</h5></div>
+<div class="col-xs-6 col-md-3" ng-repeat="topic in topics">
+    <div class="thumbnail">
+      <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image">
+      <div class="caption">
+        <h3><a class="navbar-brand" href="/topics/news">{{topic.name}}</a></h3>
+        <p>{{topic.description}}</p>
+      </div>
     </div>
-  </div>
 </div>
-<div class="col-xs-3">
+</div>
+<!--div class="col-xs-6 col-md-3">
+    <div class="thumbnail">
+      <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image">
+      <div class="caption">
+        <h3><a class="navbar-brand" href="/topics/news">CULTURE</a></h3>
+        <p>Beijing Subway Fare Hikes</p>
+      </div>
+    </div>
+</div-->
+<!--div class="col-xs-3">
   <div class="media">
     <a class="media-left media-middle" >
       <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image"/>
     </a>
     <div class="media-body">
      <div class="row"><a class="navbar-brand" href="/topics/culture">CULTURE</a></div>
-     <div class="row"><h5 class="media-heading">Beijing Subway Fare Hikes</h5></div>
+      <p>Beijing Subway Fare Hikes</p>
     </div>
   </div>
-</div>
-<div class="col-xs-3">
+</div-->
+<!--div class="col-xs-3">
   <div class="media">
     <a class="media-left media-middle" >
       <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image"/>
@@ -138,7 +146,7 @@
     </div>
   </div>
 </div>
-</div>
+</div-->
  <hr>
 <form class="form-horizontal">
   <div class="form-group">
@@ -146,24 +154,67 @@
     <div class="col-sm-5">
       <input type="email" class="form-control" id="inputEmail3" placeholder="SEARCH">
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-2">
       <button type="button" class="btn btn-default">
        <span class="glyphicon glyphicon-search" aria-hidden="true">
        </span>
       </button>
     </div>
-  </div>
-   <hr>
-  <div class="form-group">
-    <div class="media">
-    <a class="media-left media-middle">
-      <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image"/>
-    </a>
-    <div class="media-body">
-      <h4 class="media-heading">NEWS </h4>
-       <h6 class="media-heading">成员数目：1000，话题数目：1000</h6>
+    <div class="col-sm-3">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+        Create Topic
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Create New Topic</h4>
+            </div>
+            <div class="modal-body">
+              <div class="panel-body">
+               <form role="form">
+                <div class="form-group">
+                 <label for="SignupUserName">话题名</label>
+                 <input id="SignupUserName" type="text" class="form-control" placeholder="Enter Topic Name" ng-model="topic.name"/>
+                </div>
+                <div class="form-group">
+                 <label for="SignupPassword">描述</label>
+                 <input id="SignupPassword" type="password" class="form-control" placeholder="Enter keywords/description" ng-model="topic.description"/>
+                </div>
+               </form>
+               </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" ng-click="createTopic()">保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Modal-->
     </div>
   </div>
+
+  <!-- Button trigger modal -->
+
+
+
+
+
+   <hr>
+  <div class="form-group">
+      <div class="media">
+        <a class="media-left media-middle">
+        <img src="/images/iblog-32.png" class="img-rounded" alt="Responsive image"/>
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading">NEWS </h4>
+          <h6 class="media-heading">成员数目：1000，话题数目：1000</h6>
+        </div>
+      </div>
   </div>
 </form>
 

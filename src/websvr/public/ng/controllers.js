@@ -13,7 +13,23 @@ controllers.controller('MyCtrl1', function () {
 
 controllers.controller('MyCtrl2', ['$scope', '$location', function ($scope, $location) {
 }]);
-controllers.controller('TopicsCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
+
+controllers.controller('HeaderCtrl', ['$rootScope','$scope', '$location', function ($rootScope,$scope, $location) {
+    $scope.headerData = {//HeaderCtrl的私有数据
+         keyWords : null
+    };
+    $scope.query = function () {
+        if($scope.headerData.keyWords==""||$scope.headerData.keyWords==null) {
+         alert("请输入搜索关键字。。。");
+            }
+        else{
+        var keywords=window.btoa($scope.headerData.keyWords);
+        var search = 'keywords='+keywords;
+        $location.path('/query-article').search(search);
+        }
+    };
+}]);
+controllers.controller('TopicsCtrl', ['$rootScope','$scope', '$location','TopicService', function ($rootScope, $scope, $location,TopicService) {
 //点击Header部分Logo返回HomePage
     if($rootScope.user.userName!=''){//登录或是注册成功
          $rootScope.show = {
@@ -40,6 +56,29 @@ controllers.controller('TopicsCtrl', ['$rootScope','$scope', '$location', functi
             myblog:false
         };
     }
+    //初始化加载topic列表
+    //调用接口
+    TopicService.getTopics($rootScope.token, function(data){
+        $scope.topics = data.content.topics;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败topics
+        alert(msg);
+    });             
+     $scope.createTopic = function () {
+
+        TopicService.create($rootScope.token, $scope.topic.name, $scope.topic.description, function(data) {
+            alert('新话题添加成功');
+            $scope.topic.name=null;
+            $scope.topic.description=null;
+        }, function(msg){
+            alert(msg);
+        });  
+        //刷新话题列表
+    TopicService.getTopics($rootScope.token, function(data){
+        $scope.topics = data.content.topics;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败topics
+        alert(msg);
+    }); 
+    };
 }]);
 controllers.controller('HomeCtrl', ['$rootScope','$scope', '$location', function ($rootScope, $scope, $location) {
 //点击Header部分Logo返回HomePage
@@ -153,9 +192,11 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
     //文章保存
     $scope.topics = [];
     $scope.articleEditData = {};
-    TopicService.getTopics($rootScope.token, function(data) {
-        scope.topics = data.topics;
-    }, function(msg) {
+    //下拉单选框初始化加载topic列表
+    //调用接口
+    TopicService.getTopics($rootScope.token, function(data){
+        $scope.topics = data.content.topics;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败topics
         alert(msg);
     });
     var params = $location.search();
@@ -191,7 +232,7 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
 
 }]);
 
-controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageService', function ($scope, $rootScope,ArticleManageService) {
+controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageService','TopicService', function ($scope, $rootScope,ArticleManageService,TopicService) {
 //点击Header部分Logo返回HomePage
     if($rootScope.user.userName!=''){//登录或是注册成功
          $rootScope.show = {
@@ -218,6 +259,13 @@ controllers.controller('MyblogCtrl', ['$scope','$rootScope', 'ArticleManageServi
             myblog:false
         };
     }
+    //下拉单选框初始化加载topic列表
+    //调用接口
+    TopicService.getTopics($rootScope.token, function(data){
+        $scope.topics = data.content.topics;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败topics
+        alert(msg);
+    });
     //初始化加载文件列表
     ArticleManageService.loadArticles($rootScope.token, function(data){
         //登录成功后到HomePage隐藏header部分按钮
@@ -339,7 +387,7 @@ controllers.controller('SubjectManageCtrl', ['$scope','$rootScope','SubjectManag
     }
 }]);
 
-controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'QueryArticleService', function ($rootScope, $scope, $location, QueryArticleService) {
+controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'QueryArticleService','TopicService', function ($rootScope, $scope, $location, QueryArticleService,TopicService) {
     
     if($rootScope.user.userName!=''){//登录或是注册成功
         $rootScope.show = {
@@ -366,6 +414,13 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
             myblog:false
         };
     }
+    //初始化加载topic列表   
+    //调用接口
+    TopicService.getTopics($rootScope.token, function(data){
+        $scope.topics = data.content.topics;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){//失败topics
+        alert(msg);
+    }); 
     $scope.queryActicleData = {//QueryActicleCtrl的私有数据
         keyWords : null
     };

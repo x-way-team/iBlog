@@ -1,21 +1,12 @@
 <div class="row">
   <div class="col-xs-3 side-nav">
     <ul class="nav nav-sidebar">
-        <li class="active"><a href="/all-topics">全部分类
+        <li class="active">
+          <a href="/all-topics">全部分类
            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-        </a></li>
-        <li><a href="/news">NEWS</a></li>
-        <li><a href="/culture">CULTURE</a></li>
-        <li><a href="/history">HISTORY</a></li>
-        <li><a href="/geography">GEOGRAPHY</a></li>
-        <li><a href="/travelling">TRAVELLING</a></li>
-        <li><a href="/entertainment">ENTERTAINMENT</a></li>
-        <li><a href="/music">MUSIC</a></li>
-        <li><a href="/movie">MOVIE</a></li>
-        <li><a href="/health">HEALTH</a></li>
-        <li><a href="/family">FAMILY</a></li>
-        <li><a href="/life">LIFE</a></li>
-        <li><a href="/love">LOVE</a></li>
+          </a>
+        </li >
+        <li ng-repeat="topic in topics"><a ng-href="/query-article/{{topic.name}}">{{topic.name}}</a></li>
     </ul>
   </div>
 

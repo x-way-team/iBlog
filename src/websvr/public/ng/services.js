@@ -329,12 +329,15 @@ services.factory('QueryArticleService',['ApiService',function (ApiService) {
 //注册新的服务
 services.factory('TopicService',['ApiService',function (ApiService) {
     var topicData = {};
-    topicData.create = function (token, topicObj, successcb, failcb) {
+    topicData.create = function (token, topicName,topicDes, successcb, failcb) {
         var obj = {
             params: {
                 token: token
             },
-            data: topicObj
+            data: {
+                name:topicName,
+                description:topicDes
+            }
         };
         ApiService.post('/api/topics', obj, successcb, failcb);
     };

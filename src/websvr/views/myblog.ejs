@@ -19,15 +19,9 @@
       <h4 class="page-header">{{user.userName}}的文章列表</h4>
 
 类别：
-        <select class="selectpicker">
+  <select class="selectpicker" >
           <option>ALL</option>
-          <option>NEWS</option>
-          <option>CULTURE</option>
-          <option>HISTORY</option>
-          <option>GEOGRAPHY</option>
-          <option>TRAVELLING</option>
-          <option>ENTERTAINMENT</option>
-          <option>MUSIC</option>MUSIC
+          <option ng-repeat="topic in topics">{{topic.name}}</option>
   </select>
       <table class="table table-striped table-hover">
         <thead> 
