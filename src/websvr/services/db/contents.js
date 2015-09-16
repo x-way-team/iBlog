@@ -163,14 +163,37 @@ contentObj.getArticlesByTopic = function(topicName, cb) {
 
 
 //搜索文章
-contentObj.queryArticles = function(attrsObj,offset, limit, cb) {
-    //构造查询条件
-    var queryObj = {};
-    for (var attr in attrsObj) {
-        // queryObj[attr] = attrsObj[attr];
-        queryObj='{"$or":[{"title":{"$in":[/'+attrsObj[attr]+'/,/^'+attrsObj[attr]+'/,/'+attrsObj[attr]+'^/]}},{"content":{"$in":[/'+attrsObj[attr]+'/,/^'+attrsObj[attr]+'/,/'+attrsObj[attr]+'^/]}}]}';
+contentObj.queryArticles = function(attrsObj,topic,offset, limit, cb) {
+    var queryObj={};
+    if(attrsObj&&topic){//keywords && topic
+     var queryOrObj = {};
+     var queryItem={};
+    if(attrsObj.length!=0){//new RegExp("^.*"+attrsObj+".*$")用于动态的生成以包含输入关键字的正则表达式
+        queryItem['$in']=[];
+        for(var i=0;i<attrsObj.length;i++){
+                queryItem['$in'].push(new RegExp("^.*"+attrsObj[i]+".*$"));
+            }
+        queryOrObj={"$or":[{title:queryItem},{content:queryItem}]};
+        }
+        queryObj={"$and":[queryOrObj,{topic: topic}]};
+    }
+    else if(!topic){//only keywords 构造查询条件,!topic包含topic null,undefined,false,''
+       var queryObj = {};
+       var queryItem={};
+      if(attrsObj.length!=0){
+          queryItem['$in']=[];
+          for(var i=0;i<attrsObj.length;i++){
+            queryItem['$in'].push(new RegExp("^.*"+attrsObj[i]+".*$"));
+        }
+          queryObj={"$or":[{title:queryItem},{content:queryItem}]};
+    }
+    //  queryObj={"$or":[{title:new RegExp("^.*"+attrsObj[attr]+".*$")},{content:new RegExp("^.*"+attrsObj[attr]+".*$")}]};
+    }
+    else {//only topic 构造查询条件,!keyWords包含keyWords null,undefined,false,''
+        var queryObj={topic: topic};
+    }
+    //开始查询
         var query = model.ArticleModel.find(queryObj);
-        // var total = query.count();
         query.skip(offset)
         .limit(limit)
         .select('id author title status visits modifyOn')
@@ -186,7 +209,6 @@ contentObj.queryArticles = function(attrsObj,offset, limit, cb) {
                 cb(err, null);
             }
         });
-    }
     // var count = textArr.length;
     // if (count !== 0) {
     //     queryObj['$and'] = [];
@@ -198,22 +220,5 @@ contentObj.queryArticles = function(attrsObj,offset, limit, cb) {
     //     }
     // }
     // queryObj={"$or":[{"title":{"$in":[/attrsObj/,/^attrsObj/,/attrsObj^/]}},{"content":{"$in":[/attrsObj/,/^attrsObj/,/attrsObj^/]}}]};
-    //开始查询
-    // var query = model.ArticleModel.find(queryObj);
-    //     var total = query.count();
-    //     query.skip(offset)
-    //     .limit(limit)
-    //     .select('id author title modifyOn')
-    //     .exec(function (err, articles){
-    //         if (!err){
-    //             cb(null, {
-    //                 total:total, 
-    //                 offset:offset, 
-    //                 count:articles.length, 
-    //                 articles:articles
-    //             }); 
-    //         } else {
-    //             cb(err, null);
-    //         }
-    //     });
+
 };

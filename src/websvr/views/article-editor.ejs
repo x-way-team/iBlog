@@ -15,8 +15,9 @@
             </div>
             <div class="form-group">
                 <label for="selectTopic">主题</label>
-                <select class="form-control" id="selectTopic">
-                    <option ng-repeat="topic in topics">{{topic.name}}</option>
+                <select class="form-control" id="selectTopic" ng-model="articleEditData.topic">
+                    <option ng-repeat="topic in topics"  value="{{topic.name}}">{{topic.name}}
+                    </option>
                 </select>
             </div>
         </form>

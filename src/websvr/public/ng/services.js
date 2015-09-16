@@ -303,24 +303,17 @@ services.factory('SubjectManageService',['ApiService',function (ApiService) {
 //全局文章搜索
 services.factory('QueryArticleService',['ApiService',function (ApiService) {
     var queryData = {};
-    queryData.getAritcleAll = function (token, keyWords, successcb, failcb) {
+    queryData.getAritcles = function (token, keyWords, topic,successcb, failcb) {
         var obj = {
             params: {
-                token: token,
-                keyWords: keyWords
+                token: token
+            },
+            data:{
+                 keyWords: keyWords,
+                 topic: topic
             }
         };
-        ApiService.get('/api/query-article', obj, successcb, failcb);
-    };
-    queryData.getAritcleSpec = function (token, topic,queryObj,successcb, failcb) {
-        var obj = {
-            params: {
-                token: token,
-                data: queryObj
-            }
-            
-        };
-        ApiService.get('/api/query-article/'+topic, obj, successcb, failcb);
+        ApiService.post('/api/query-article', obj, successcb, failcb);
     };
     return queryData;
 }]);

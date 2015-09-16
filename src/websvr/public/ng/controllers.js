@@ -24,8 +24,9 @@ controllers.controller('HeaderCtrl', ['$rootScope','$scope', '$location', functi
             }
         else{
         var keywords=window.btoa($scope.headerData.keyWords);
-        var search = 'keywords='+keywords;
+        var search = {keywords: keywords}//'keywords='+keywords;
         $location.path('/query-article').search(search);
+        $scope.headerData.keyWords==null//empty keywords
         }
     };
 }]);
@@ -199,6 +200,7 @@ controllers.controller('ArticleEditCtrl', ['$rootScope','$scope','ArticleManageS
     }, function(msg){//失败topics
         alert(msg);
     });
+//
     var params = $location.search();
     if (params.articleId) {
         ArticleManageService.getArticle($rootScope.token, params.articleId, function(data) {
@@ -413,7 +415,24 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
             client:true,
             myblog:false
         };
-    }
+    }    
+     $scope.queryActicleData = {//QueryActicleCtrl的私有数据
+        keywords : null, //关键词的数组
+        topic: null,     //所属分类
+        keywordsStr: ''，//关键词字符串，从url取得
+     };
+     var params = $location.search();//从URL取出参数,包括keywords，topic
+     if(params.keywords != null){
+        var keys = window.atob(params.keywords);//decode keywords
+        $scope.queryActicleData.keywords = keys;//关键字transfer to input
+      }
+     
+        //搜索文章
+      QueryArticleService.getAritcles($rootScope.token, keys, params.topic,function(data) {
+          $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+      }, function(msg){
+        alert(msg);
+      }); 
     //初始化加载topic列表   
     //调用接口
     TopicService.getTopics($rootScope.token, function(data){
@@ -421,19 +440,15 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
     }, function(msg){//失败topics
         alert(msg);
     }); 
-    $scope.queryActicleData = {//QueryActicleCtrl的私有数据
-        keyWords : null
-    };
+
     $scope.queryArtilce = function () {
-        if($scope.queryActicleData.keyWords != null) { //输入查询关键字
-            //全局搜索文章
-            QueryArticleService.getAritcleAll($rootScope.token, $scope. queryActicleData.keyWords, function(data) {
-                $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
-            }, function(msg){
-                alert(msg);
-            }); 
+     if($scope.queryActicleData.keywords != null) { //查询关键字
+       var key=window.btoa($scope.queryActicleData.keywords);
+       var params = $location.search();
+       params.keywords=key;//'keywords='+keywords
+       $location.search(params);  //添加关键字keywords到URL
         } else {
-            alert("文章查询失败！");
+            alert("请输入查询关键字！");
         }
     };
 }]);
