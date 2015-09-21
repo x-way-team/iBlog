@@ -419,16 +419,21 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
     $scope.queryActicleData = {//QueryActicleCtrl的私有数据
         keywords : null, //关键词的数组
         topic: null,     //所属分类
-        keywordsStr: '', //关键词字符串，从url取得
     };
     var params = $location.search();//从URL取出参数,包括keywords，topic
+
     if(params.keywords != null){
         var keys = window.atob(params.keywords);//decode keywords
         $scope.queryActicleData.keywords = keys;//关键字transfer to input
     }
-     
+    if (params.topic) {
+        $scope.queryActicleData.topic = params.topic;
+    }
         //搜索文章
-    QueryArticleService.getAritcles($rootScope.token, keys, params.topic,function(data) {
+    QueryArticleService.getAritcles(
+        $rootScope.token, 
+        $scope.queryActicleData.keywords, 
+        $scope.queryActicleData.topic, function(data) {
         $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
     }, function(msg){
         alert(msg);
@@ -442,13 +447,19 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
     }); 
 
     $scope.queryArtilce = function () {
-        if($scope.queryActicleData.keywords != null) { //查询关键字
-            var key=window.btoa($scope.queryActicleData.keywords);
-            var params = $location.search();
-            params.keywords=key;//'keywords='+keywords
-            $location.search(params);  //添加关键字keywords到URL
-        } else {
-            alert("请输入查询关键字！");
+        var path = $location.path();
+        var params = {};
+
+        if($scope.queryActicleData.keywords) { //查询关键字
+            var key = window.btoa($scope.queryActicleData.keywords);
+            params.keywords = key;//'keywords='+keywords
+        } 
+        if ($scope.queryActicleData.topic) {
+            params.topic = $scope.queryActicleData.topic;
+        }
+        for (var arg in params) { //
+            $location.path(path).search(params);
+            break;
         }
     };
 }]);
