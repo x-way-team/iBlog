@@ -416,23 +416,23 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
             myblog:false
         };
     }    
-     $scope.queryActicleData = {//QueryActicleCtrl的私有数据
+    $scope.queryActicleData = {//QueryActicleCtrl的私有数据
         keywords : null, //关键词的数组
         topic: null,     //所属分类
-        keywordsStr: ''，//关键词字符串，从url取得
-     };
-     var params = $location.search();//从URL取出参数,包括keywords，topic
-     if(params.keywords != null){
+        keywordsStr: '', //关键词字符串，从url取得
+    };
+    var params = $location.search();//从URL取出参数,包括keywords，topic
+    if(params.keywords != null){
         var keys = window.atob(params.keywords);//decode keywords
         $scope.queryActicleData.keywords = keys;//关键字transfer to input
-      }
+    }
      
         //搜索文章
-      QueryArticleService.getAritcles($rootScope.token, keys, params.topic,function(data) {
-          $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
-      }, function(msg){
+    QueryArticleService.getAritcles($rootScope.token, keys, params.topic,function(data) {
+        $scope.articles = data.content.articles.articles;//绑定数据,将后台返回数据与对应controller绑定,用于前台ejs显示
+    }, function(msg){
         alert(msg);
-      }); 
+    }); 
     //初始化加载topic列表   
     //调用接口
     TopicService.getTopics($rootScope.token, function(data){
@@ -442,11 +442,11 @@ controllers.controller('QueryAtiCtrl', ['$rootScope', '$scope', '$location', 'Qu
     }); 
 
     $scope.queryArtilce = function () {
-     if($scope.queryActicleData.keywords != null) { //查询关键字
-       var key=window.btoa($scope.queryActicleData.keywords);
-       var params = $location.search();
-       params.keywords=key;//'keywords='+keywords
-       $location.search(params);  //添加关键字keywords到URL
+        if($scope.queryActicleData.keywords != null) { //查询关键字
+            var key=window.btoa($scope.queryActicleData.keywords);
+            var params = $location.search();
+            params.keywords=key;//'keywords='+keywords
+            $location.search(params);  //添加关键字keywords到URL
         } else {
             alert("请输入查询关键字！");
         }
